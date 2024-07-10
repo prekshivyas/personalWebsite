@@ -7,4 +7,5 @@ streamlit-analytics
 beautifulsoup4
 streamlit-elements
 requests==2.31
+streamlit_extras==0.4.3
 

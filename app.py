@@ -625,7 +625,7 @@ elif choose == "Projects":
     with st.container():
         text_column, image_column = st.columns((3,1))
         with text_column:
-            st.subheader("Image Classfication - Traditional Machine Learning vs Deep Learning")
+            st.subheader("Image Classification - Traditional Machine Learning vs Deep Learning")
             st.markdown("""
             - Pre-processed ImageNet Dataset and ran traditional classfication ML Models performing extensive hyperparameter turning and dataset shifts.
             - Improved Image Classification using a custom CNN architecture with advanced pre-processing techniques, including normalization, Gaussian blur, and augmentation via data-set shifts.
