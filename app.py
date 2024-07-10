@@ -300,11 +300,11 @@ if choose == "About Me":
             index = st.session_state[key]
 
             # Display the current image
-            with st.container(height=400):
+            with st.container(height=300):
                 st.image(images[index], use_column_width=True)
 
             # Create two columns for previous and next buttons
-            col1, col2, col3, col4, col5, col6 = st.columns(6)
+            col1, col2, col3, col4 = st.columns(4)
 
             # Previous button
             with col1:
@@ -313,7 +313,7 @@ if choose == "About Me":
                     st.experimental_rerun()
 
             # Next button
-            with col6:
+            with col4:
                 if st.button(".>>.", key=f"{key}_next"):
                     st.session_state[key] = (index + 1) % len(images)
                     st.experimental_rerun()
