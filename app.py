@@ -448,8 +448,6 @@ elif choose == "Technical Skills":
         {"name": "Flask-Restful APIs", "image_url": "images/skills/Flask.svg"},
         {"name": "Firebase", "image_url": "images/skills/firebase.svg"},
         {"name": "Jenkins CI/CD", "image_url": "images/skills/Jenkins.svg"},
-        {"name": "JIRA", "image_url": "images/skills/Jira.svg"},
-        {"name": "Confluence", "image_url": "images/skills/Confluence.svg"},
         {"name": "SQL", "image_url": "images/skills/sql.svg"},
         {"name": "Hugging Face", "image_url": "images/skills/huggface.png"},
         {"name": "RoboFlow", "image_url": "images/skills/roboflow.jpg"},
@@ -470,7 +468,9 @@ elif choose == "Technical Skills":
         {"name": "Grafana", "image_url": "images/skills/grafana.svg"},
         {"name": "Prometheus", "image_url": "images/skills/prometheus.svg"},
         {"name": "Bash/Shell Scripting", "image_url": "images/skills/bash.svg"},
-        {"name": "Microservices", "image_url": "images/skills/microservices.svg"}
+        {"name": "Microservices", "image_url": "images/skills/microservices.svg"},
+         {"name": "JIRA", "image_url": "images/skills/Jira.svg"},
+        {"name": "Confluence", "image_url": "images/skills/Confluence.svg"},
     ]
 
     # Function to display skills with images
