@@ -302,6 +302,26 @@ if choose == "About Me":
             # Display the current image
             st.image(images[index], use_column_width=True)
 
+            st.markdown(
+            """
+            <style>
+            .stButton > button {
+                background-color: white;
+                color: black;
+            }
+            .stButton > button:hover {
+                background-color: white;
+                color: black;
+            }
+            .stButton > button:active {
+                background-color: white;
+                color: black;
+            }
+            </style>
+            """,
+            unsafe_allow_html=True
+        )
+
 
             # Create two columns for previous and next buttons
             col1, col2, col3, col4 = st.columns(4)
