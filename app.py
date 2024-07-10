@@ -300,7 +300,7 @@ if choose == "About Me":
             index = st.session_state[key]
 
             # Display the current image
-            with st.container(height=500):
+            with st.container(height=400):
                 st.image(images[index], use_column_width=True)
 
             # Create two columns for previous and next buttons
