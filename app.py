@@ -445,17 +445,17 @@ elif choose == "Technical Skills":
     software_engineering_skills = [
         {"name": "Python", "image_url": "images/skills/python.svg"},
         {"name": "Java", "image_url": "images/skills/java.svg"},
-        {"name": "Flask-Restful APIs", "image_url": "images/skills/flask.svg"},
+        {"name": "Flask-Restful APIs", "image_url": "images/skills/Flask.svg"},
         {"name": "Firebase", "image_url": "images/skills/firebase.svg"},
-        {"name": "Jenkins CI/CD", "image_url": "images/skills/jenkins.svg"},
+        {"name": "Jenkins CI/CD", "image_url": "images/skills/Jenkins.svg"},
         {"name": "JIRA", "image_url": "images/skills/Jira.svg"},
         {"name": "Confluence", "image_url": "images/skills/Confluence.svg"},
         {"name": "SQL", "image_url": "images/skills/sql.svg"},
         {"name": "Hugging Face", "image_url": "images/skills/huggface.png"},
         {"name": "RoboFlow", "image_url": "images/skills/roboflow.jpg"},
-        {"name": "Numpy", "image_url": "images/skills/Numpy.svg"},
+        {"name": "Numpy", "image_url": "images/skills/NumPy.svg"},
         {"name": "Pandas", "image_url": "images/skills/Pandas.png"},
-        {"name": "PyTorch", "image_url": "images/skills/Pytorch.svg"},
+        {"name": "PyTorch", "image_url": "images/skills/PyTorch.svg"},
         {"name": "Scikit-learn", "image_url": "images/skills/scikit-learn.svg"},
         {"name": "PostgresDB", "image_url": "images/skills/PostgresSQL.svg"},
         {"name": "Apache Spark", "image_url": "images/skills/spark.svg"},
@@ -584,9 +584,6 @@ elif choose == "Education":
             st.subheader("Bachelor of Technology - Information Technology, [VIT Vellore](https://vit.ac.in/) (2016-2020)")
             st.write("GPA: 9.01/10")
             st.write("Relevant Coursework: Applied Linear Algebra, Machine Learning, Big Data, Human Computer Interaction, Data Structures and Algorithms, Database Managment Systems, Networking, Operating Systems, Advanced Java Programming, Mobile Application Development, Web Programming")
-            st.markdown("""
-            - [VIT Dance Club]- Team Lead & Board Member (2018-2020)
-            """)
 
 
 elif choose == "Projects":
@@ -757,7 +754,7 @@ elif choose == "Leadership and Volunteering":
                 if i + idx < len(lv):
                     exp = lv[i + idx]
                     with col:
-                        st.image(exp['image_url'], width=500)
+                        st.image(exp['image_url'], width=300)
                         st.subheader(exp['Position'])
                         st.markdown(f"**{exp['Organization']}**")
                         st.markdown(f"- {exp['Description']}")
