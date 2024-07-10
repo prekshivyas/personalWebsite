@@ -236,10 +236,10 @@ with st.sidebar:
                          menu_icon="mortarboard", 
                          default_index=0,
                          styles={
-        "container": {"padding": "0!important", "background-color": "#ecd7b3"},
+        "container": {"padding": "0!important", "background-color": "#ebdcc3"},
         "icon": {"color": "black", "font-size": "20px"}, 
         "nav-link": {"font-size": "15px", "text-align": "left", "margin":"0px", "--hover-color": "#eee"},
-        "nav-link-selected": {"background-color": "#ecd7b3"},
+        "nav-link-selected": {"background-color": "#ebdcc3"},
     }
     )
     youtube_url = "https://www.youtube.com/@prekshivyas"
