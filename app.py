@@ -239,7 +239,7 @@ with st.sidebar:
         "container": {"padding": "0!important", "background-color": "#ebdcc3"},
         "icon": {"color": "black", "font-size": "20px"}, 
         "nav-link": {"font-size": "15px", "text-align": "left", "margin":"0px", "--hover-color": "#eee"},
-        "nav-link-selected": {"background-color": "#ebdcc3"},
+        "nav-link-selected": {"background-color": "#eee", "color": "black"},
     }
     )
     youtube_url = "https://www.youtube.com/@prekshivyas"
