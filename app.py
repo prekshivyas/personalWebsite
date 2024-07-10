@@ -485,7 +485,7 @@ elif choose == "Technical Skills":
                 if idx < num_skills:
                     with cols[j]:
                         try:
-                            st.image(skills[idx]['image_url'], width=100)
+                            st.image(skills[idx]['image_url'], width=75)
                             st.write(skills[idx]['name'])
                         except:
                             continue
