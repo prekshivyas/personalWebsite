@@ -322,13 +322,13 @@ if choose == "About Me":
 
             # Previous button
             with col1:
-                if st.button("Previous", key=f"{key}_prev"):
+                if st.button("<", key=f"{key}_prev"):
                     st.session_state[key] = (index - 1) % len(images)
                     st.experimental_rerun()
 
             # Next button
             with col2:
-                if st.button("Next", key=f"{key}_next"):
+                if st.button(">", key=f"{key}_next"):
                     st.session_state[key] = (index + 1) % len(images)
                     st.experimental_rerun()
             
