@@ -236,7 +236,7 @@ with st.sidebar:
                          menu_icon="mortarboard", 
                          default_index=0,
                          styles={
-        "container": {"padding": "0!important", "background-color": "#ebdcc3"},
+        "container": {"padding": "0!important", "background-color": "#ece2d1"},
         "icon": {"color": "black", "font-size": "20px"}, 
         "nav-link": {"font-size": "15px", "text-align": "left", "margin":"0px", "--hover-color": "#eee"},
         "nav-link-selected": {"background-color": "#eee", "color": "black"},
@@ -310,11 +310,13 @@ if choose == "About Me":
             with col1:
                 if st.button(".<<.", key=f"{key}_prev"):
                     st.session_state[key] = (index - 1) % len(images)
+                    st.experimental_rerun()
 
             # Next button
             with col4:
                 if st.button(".>>.", key=f"{key}_next"):
                     st.session_state[key] = (index + 1) % len(images)
+                    st.experimental_rerun()
             
         images = ["images/frenz3.jpeg", "images/intro.jpeg", "images/piano.jpeg"]
         with right_column:
