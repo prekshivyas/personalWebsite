@@ -1,4 +1,5 @@
 import streamlit as st
+from streamlit import components
 from streamlit_option_menu import option_menu
 from streamlit.components.v1 import html
 from st_on_hover_tabs import on_hover_tabs
@@ -10,13 +11,15 @@ import base64
 from streamlit_extras.mention import mention
 from streamlit_extras.app_logo import add_logo
 import sqlite3
+from streamlit_elements import elements, mui, html, sync
+import json
 #from bs4 import BeautifulSoup
 from streamlit_extras.echo_expander import echo_expander
 
 #test
 
 # Set page title
-st.set_page_config(page_title="Harry Chang", page_icon = "desktop_computer", layout = "wide", initial_sidebar_state = "auto")
+st.set_page_config(page_title="Prekshi Vyas", page_icon = "desktop_computer", layout = "wide", initial_sidebar_state = "auto")
 
 # Use the following line to include your style.css file
 st.markdown('<style>' + open('style.css').read() + '</style>', unsafe_allow_html=True)
@@ -86,9 +89,10 @@ def pdf_link(pdf_url, link_text="Click here to view PDF"):
 # Load assets
 #lottie_coding = load_lottieurl("https://assets5.lottiefiles.com/packages/lf20_fcfjwiyb.json")
 # Assets for about me
-img_utown = Image.open("images/utown.JPG")
-img_lh = Image.open("images/lh.jpg")
-img_ifg = Image.open("images/ifg.jpg")
+img_utown = Image.open("images/frenz3.jpeg")
+img_utown_2 = Image.open("images/intro.jpeg")
+img_pv = Image.open("images/grad.jpeg")
+img_drdo = Image.open("images/drdo.png")
 #Assets for competitions
 img_lit = Image.open("images/legalease.jpg")
 img_lifehack2 = Image.open("images/lifehack2.jpg")
@@ -101,27 +105,20 @@ img_runes = Image.open("images/runes.png")
 # Assets for education
 img_sji = Image.open("images/sji.jpg")
 img_tpjc = Image.open("images/tpjc.jpg")
-img_nus = Image.open("images/nus.jpeg")
-img_poc = Image.open("images/poc.jpg")
+img_vit = Image.open("images/frenz7.jpeg")
+img_frenx = Image.open("images/frenz2.jpeg")
 img_gmss = Image.open("images/gmss.jpg")
 img_sjij = Image.open("images/sjij.jpg")
 img_dsa = Image.open("images/dsa.jpg")
 # Assets for experiences
 img_quest = Image.open("images/questlogo.jpg")
-img_scor = Image.open("images/scor.jpg")
-img_iasg = Image.open("images/iasg.jpg")
-img_sshsph = Image.open("images/sshsph.jpg")
-img_yll = Image.open("images/yll.jpg")
-img_saf = Image.open("images/saf.jpg")
-img_bitmetrix = Image.open("images/bitmetrix.jpg")
-img_groundup = Image.open("images/groundup.jpg")
-img_hedgedrip = Image.open("images/hedgedrip.jpg")
+img_penn = Image.open("images/penn.png")
+img_cisco = Image.open("images/cisco.jpg")
+img_sg = Image.open("images/sg.png")
+img_smartek = Image.open("images/smartek.png")
 # Assets for projects
-image_names_projects = ["ecom", "chatgpt", "videogames", "health", 
-                         "biopics", "anime", "word2vec", "cellphone", 
-                         "spotify", "map", "gephi", "fob", "get", "ttdb",
-                         "blockchain"]
-images_projects = [Image.open(f"images/{name}.{'jpg' if name not in ('map', 'gephi', 'health') else 'png'}") for name in image_names_projects]
+image_names_projects = ["ds", "sentiment", "imagecls"] # , "sentiment", "imageclassify", "blockchain", "recsystem"
+images_projects = [Image.open(f"images/{name}.{'png' if name in ('ds') else 'jpg'}") for name in image_names_projects]
 # Assets for volunteering
 image_names_vol = ["sdslogo", "sportslogo", "gdsclogo", "csclogo", 
                          "nussulogo", "sklogo", "simlogo", "tpjclogo", 
@@ -142,107 +139,10 @@ img_measles = Image.open("images/measles.jpeg")
 img_bmsaew = Image.open("images/bmsaew.png")
 img_dac1 = Image.open("images/dac1.png")
 img_dac2 = Image.open("images/dac2.png")
-# Assets for gallery
-# 2005
-img_2005_1 = Image.open("gallery/2005_1.jpg")
-img_2005_2 = Image.open("gallery/2005_2.jpg")
-# 2006
-img_2006_1 = Image.open("gallery/2006_1.jpg")
-# 2008
-img_2008_1 = Image.open("gallery/2008_1.jpg")
-# 2009
-img_2009_1 = Image.open("gallery/2009_1.jpg")
-# 2011
-image_dict = {}
-num_images = 4
-for i in range(1, num_images + 1):
-    image_key = f"img_2011_{i}"
-    image_path = f"gallery/2011_{i}.jpg"
-    image_dict[image_key] = Image.open(image_path)
-# 2012 
-image_dict = {}
-num_images = 7
-for i in range(1, num_images + 1):
-    image_key = f"img_2012_{i}"
-    image_path = f"gallery/2012_{i}.jpg"
-    image_dict[image_key] = Image.open(image_path)
-# 2013
-image_dict = {}
-num_images = 11
-for i in range(1, num_images + 1):
-    image_key = f"img_2013_{i}"
-    image_path = f"gallery/2013_{i}.jpg"
-    image_dict[image_key] = Image.open(image_path)
-# 2014
-image_dict = {}
-num_images = 13
-for i in range(1, num_images + 1):
-    image_key = f"img_2014_{i}"
-    image_path = f"gallery/2014_{i}.jpg"
-    image_dict[image_key] = Image.open(image_path)
-# 2015
-image_dict = {}
-num_images = 48
-for i in range(1, num_images + 1):
-    image_key = f"img_2015_{i}"
-    image_path = f"gallery/2015_{i}.jpg"
-    image_dict[image_key] = Image.open(image_path)
-# 2016
-image_dict = {}
-num_images = 25
-for i in range(1, num_images + 1):
-    image_key = f"img_2016_{i}"
-    image_path = f"gallery/2016_{i}.jpg"
-    image_dict[image_key] = Image.open(image_path)
-# 2017
-image_dict = {}
-num_images = 4
-for i in range(1, num_images + 1):
-    image_key = f"img_2017_{i}"
-    image_path = f"gallery/2017_{i}.jpg"
-    image_dict[image_key] = Image.open(image_path)
-# 2018
-image_dict = {}
-num_images = 16
-for i in range(1, num_images + 1):
-    image_key = f"img_2018_{i}"
-    image_path = f"gallery/2018_{i}.jpg"
-    image_dict[image_key] = Image.open(image_path)
-# 2019
-image_dict = {}
-num_images = 20
-for i in range(1, num_images + 1):
-    image_key = f"img_2019_{i}"
-    image_path = f"gallery/2019_{i}.jpg"
-    image_dict[image_key] = Image.open(image_path)
-#2020
-image_dict = {}
-num_images = 3
-for i in range(1, num_images + 1):
-    image_key = f"img_2020_{i}"
-    image_path = f"gallery/2020_{i}.jpg"
-    image_dict[image_key] = Image.open(image_path)
-#2021
-image_dict = {}
-num_images = 14
-for i in range(1, num_images + 1):
-    image_key = f"img_2021_{i}"
-    image_path = f"gallery/2021_{i}.jpg"
-    image_dict[image_key] = Image.open(image_path)
-#2022
-image_dict = {}
-num_images = 19
-for i in range(1, num_images + 1):
-    image_key = f"img_2022_{i}"
-    image_path = f"gallery/2022_{i}.jpg"
-    image_dict[image_key] = Image.open(image_path)
-#2023
-image_dict = {}
-num_images = 22
-for i in range(1, num_images + 1):
-    image_key = f"img_2023_{i}"
-    image_path = f"gallery/2023_{i}.jpg"
-    image_dict[image_key] = Image.open(image_path)
+
+
+# Assets for tech talks
+img_techtalk = Image.open("images/airflowsummit.jpg")
 #img_lottie_animation = Image.open("images/lottie_animation.gif")
 # Assets for contact
 lottie_coding = load_lottieurl("https://assets9.lottiefiles.com/packages/lf20_abqysclq.json")
@@ -340,14 +240,14 @@ with st.sidebar:
         with l:
             st.empty()
         with m:
-            st.image(img_lh, width=175)
+            st.image(img_pv, width=175)
         with r:
             st.empty()
     
     choose = option_menu(
-                        "Harry Chang", 
-                        ["About Me", "Site Overview", "Experience", "Technical Skills", "Education", "Projects", "Competitions", "Volunteering", "Blog", "Gallery", "Resume", "Testimonials", "Contact"],
-                         icons=['person fill', 'globe', 'clock history', 'tools', 'book half', 'clipboard', 'trophy fill', 'heart', 'pencil square', 'image', 'paperclip', 'star fill', 'envelope'],
+                        "Prekshi Vyas", 
+                        ["About Me", "Experience & Research", "Technical Skills", "Education", "Talks", "Projects", "Certifications"],
+                         icons=['person-fill', 'clock-fill', 'tools', 'book-half', 'star-half', 'pencil-fill', 'award-fill', 'clipboard-fill', 'envelope-fill'],
                          menu_icon="mortarboard", 
                          default_index=0,
                          styles={
@@ -357,188 +257,177 @@ with st.sidebar:
         "nav-link-selected": {"background-color": "#cfcfb4"},
     }
     )
-    youtube_url = "https://www.youtube.com/@harrychangjr"
-    linkedin_url = "https://www.linkedin.com/in/harrychangjr/"
-    github_url = "https://github.com/harrychangjr"
-    wordpress_url = "https://antcabbage.wordpress.com"
-    email_url = "mailto:harrychang.work@gmail.com"
+    youtube_url = "https://www.youtube.com/@prekshivyas"
+    linkedin_url = "https://www.linkedin.com/in/prekshi-vyas/"
+    github_url = "https://github.com/prekshivyas"
+    email_url = "mailto:prvyas@seas.upenn.edu"
+    resume = "https://drive.google.com/file/d/1CPW5glbrIDu7CwS1kx-CH7EmBzy7vqE8/view"
+    
+    def get_icons(url):
+        icons = ""
+        icons+=social_icons(30, 30, LinkedIn=linkedin_url, GitHub=github_url, Email=email_url)
+        icons += f'<a href="{url}" target="_blank" style="color: orange; font-weight: bold;"><span style="font-size: 24px;">📋</span>CV</a>'
+        icons+=social_icons(30, 30, Youtube=youtube_url)
+        return icons
+
     with st.container():
         l, m, r = st.columns((0.11,2,0.1))
         with l:
             st.empty()
         with m:
             st.markdown(
-                social_icons(30, 30, Youtube=youtube_url, LinkedIn=linkedin_url, GitHub=github_url, Wordpress=wordpress_url, Email=email_url),
+                get_icons(resume),
                 unsafe_allow_html=True)
         with r:
             st.empty()
 
 st.write('<style>div.block-container{padding-top:0rem;}</style>', unsafe_allow_html=True)
-st.title("Harry Chang")
+st.title("Prekshi Vyas")
 # Create header
 if choose == "About Me":
     #aboutme.createPage()
     with st.container():
         left_column, middle_column, right_column = st.columns((1,0.2,0.5))
         with left_column:
-            st.header("About Me")
-            st.subheader("Aspiring Data Analyst/Product Manager")
-            st.write("👋🏻 Hi, I'm Harry! I'm a data science and analytics undergraduate based in Singapore. Having prior relevant experiences in tech, reinsurance and consulting sectors, I am constantly seeking unique internships to broaden my horizons before embarking on my data career upon graduation.")
-            st.write("💼 With the COVID-19 pandemic behind us, I believe there is potential for data science to be applied in the retail industry. In response to the increasing demand for data analytics from both online and brick-and-mortar sales, I am thus aiming to enter this industry for my first full-time job.")
-            st.write("🏋🏻 In addition, I like to exercise in the gym, run, write, play video games and... enjoy eating good food in my free time!")
-            st.write("👨🏼‍💻 Academic interests: Data Visualization, Market Basket Analysis, Recommendation Systems, Natural Language Processing")
-            st.write("💭 Ideal Career Prospects: Data Analyst, Data Scientist, Data Engineer, Business Intelligence Analyst, Product Manager")
-            st.write("📄 [Resume (1 page)](https://drive.google.com/file/d/164EEVH6BmvC89q2M4WsBNF1JyddDAbNY/view?usp=sharing)")
+            # st.subheader("All things Cloud and ML!")
+            # st.markdown("<h4 style='font-size: 20px;'>Currently looking for Summer 2025 Internships</h4>", unsafe_allow_html=True)
+
+            st.write("👋🏻 Hello, I'm Prekshi, currently pursuing a Master's in Computer Science at the University of Pennsylvania. With 3 years of professional experience as a Software Engineer specializing in Cloud and DevOps, I have also made significant contributions to Open Source projects. My journey includes speaking at global summits, leading academic projects, and conducting research in Natural Language Processing. I excel in automating and optimizing processes to ensure reliability and scalability. I am actively pursuing opportunities for Summer 2025 Internships.")
+            st.write("💃 In addition, I am a street style dancer and love reading non-fiction!")
+            st.write("👨🏼‍💻 Interests: Microservices, Distributed Systems, DevOps, MultiModal Large Models, Machine Learning, Natural Language Processing, Computer Vision, Data Orchestration")
+            # st.write("📄 [Resume (1 page)](https://drive.google.com/file/d/164EEVH6BmvC89q2M4WsBNF1JyddDAbNY/view?usp=sharing)")
         with middle_column:
             st.empty()
-        with right_column:
-            st.image(img_utown)
-elif choose == "Site Overview":   
-    #overview.createPage()
-    st.header("Site Overview")
-    st.markdown("""
-    Initally creating this as a portfolio website in the form of an extended resume, I came to discover the uniqueness of Streamlit as compared to typical front-end frameworks such as Angular and Bootstrap. Even though Streamlit is primarily used as a web application for dashboarding, its extensive features make it more aesthetically appealing to explore with as compared to alternatives such as Plotly and Shiny.
-    
-    With the convenience of using Python as a beginner-friendly programming language, I have now decided to evolve this personal project into a time capsule - documenting key moments and achievements that I have attained since commencing my formal education at 7 years old. In addition, should I be successful in completing this project, I intend to provide my codes as open-source, so that other students can document their educational journey in a similar manner.
+        
+        def slideshow_swipeable(images):
+            # Create a unique key for this instance of the slideshow
+            key = f"slideshow_{str(images).encode().hex()}"
 
-    A video will also be embedded in this section to provide a detailed tour of this entire web application and its features.
+            # Initialize the index in session state if it doesn't exist
+            if key not in st.session_state:
+                st.session_state[key] = 0
 
-    """)
-    with st.container():
-            col1, col2, col3 = st.columns((1,3,1))
+            # Get the current index from session state
+            index = st.session_state[key]
+
+            # Display the current image
+            st.image(images[index], use_column_width=True)
+
+            # Create two columns for previous and next buttons
+            col1, col2 = st.columns(2)
+
+            # Previous button
             with col1:
-                st.empty()
+                if st.button("Previous", key=f"{key}_prev"):
+                    st.session_state[key] = (index - 1) % len(images)
+                    st.experimental_rerun()
+
+            # Next button
             with col2:
-                st.video("https://youtu.be/1QlgizeKg44")
-            with col3:
-                st.empty()
-    st.markdown("""
-    *For an optimal experience, do browse this site on desktop!*
-
-    Updated May 1, 2023
-    """)
-# Create section for Work Experience
-elif choose == "Experience":
-    #st.write("---")
-    st.header("Experience")
-    with st.container():
-        image_column, text_column = st.columns((1,5))
-        with image_column:
-            st.image(img_hedgedrip)
-        with text_column:
-            st.subheader("Product Manager, [HedgeDrip](https://hedgedrip.vercel.app)")
-            st.write("*September 2023 to Present*")
-            st.markdown("""
-            `Figma` `Notion` `Product Management`
-            """)
-    with st.container():
-        image_column, text_column = st.columns((1,5))
-        with image_column:
-            st.image(img_groundup)
-        with text_column:
-            st.subheader("Data Science Intern, [Groundup.ai](https://groundup.ai)")
-            st.write("*July to December 2023 (Expected)*")
-            st.markdown("""
-            - Deployed sound sensors using Raspberry Pi technology to acquire real-time noise data from naval vessels and support comprehensive analysis using spectrograms for anomaly detection
-            - Utilised Librosa, Matplotlib and Scikit-Learn to detect anomalies for predictive maintenance of machines using spectrograms and principal component analysis (PCA)
-            - Leveraged AWS CloudFormation and YAML to script automatic configuration of Amazon S3 buckets, leading to significant reduction in manual setup time and minimizing potential for human error
-            - Collaborated with Product Lead, AI Lead and Software Engineers to improve usability and customization for sound predictive maintenance dashboard
+                if st.button("Next", key=f"{key}_next"):
+                    st.session_state[key] = (index + 1) % len(images)
+                    st.experimental_rerun()
             
-            `Python` `Raspberry Pi` `Jira` `Confluence` `Amazon S3` `EC2` `Librosa` `Docker` `Git` `Scikit-Learn` `MLFlow` `YAML` `InfluxDB` `ScyllaDB` `PostgreSQL` `Matplotlib` `Plotly` `Minio`
-            """)
-    with st.container():
-        image_column, text_column = st.columns((1,5))
-        with image_column:
-            st.image(img_bitmetrix)
-        with text_column:
-            st.subheader("Data Science Intern, [Bitmetrix](https://bitmetrix.ai)")
-            st.write("*June to July 2023*")
-            st.markdown("""
-            - Built social media scraper using snscrape to scrape Tweets from popular blockchain websites based on rankings from CoinGecko and CoinMarketCap
-            - Constructed webscraper using Streamlit and BeautifulSoup4 to collate news articles from various sources (e.g https://blockchain.news) into Pandas dataframe for future analysis using natural language processing methods
+        images = ["images/frenz3.jpeg", "images/intro.jpeg", "images/frenz4.jpeg"]
+        with right_column:
+            slideshow_swipeable(images)
+        
+        st.markdown(
+        """
+    <div style="position: fixed; bottom: 10px; right: 10px; text-align: right;">
+        <p style="font-size: 12px; color: grey;">Portfolio design inspired by <a href="https://github.com/harrychangjr/portfolio" target="_blank">Harry Chang</a></p>
+    </div>
+    """,
+        unsafe_allow_html=True
+    )
+                
 
-            `Python` `BeautifulSoup4` `snscrape` `Streamlit` `Pandas`
-            """)
-    with st.container():
-        image_column, text_column = st.columns((1,5))
-        with image_column:
-            st.image(img_scor)
-        with text_column:
-            st.subheader("Actuarial Intern, [SCOR](https://scor.com)")
-            st.write("*May to August 2022* | [*Testimonial*](https://drive.google.com/file/d/1seUP5OcXV5irA1Y1qt0cKnd7uQnLJLzw/view?usp=share_link)")
-            st.markdown("""
-            - Performed actuarial analysis of reinsurance treaties in various APAC markets, including entry of client portfolio and loss data into xAct (treaty pricing system)
-            - Regularly updated and analysed risk profiles and claims databases for insurance markets in Pakistan, Thailand and Vietnam
-            - Trained machine learning models (logistic regression, random forest) to predict insurance claims, with an average accuracy of 80% for each model
+elif choose == "Experience & Research":
 
-            `Excel` `Python` `R` `xAct` `VBA`
-            """)
-    with st.container():
-        image_column, text_column = st.columns((1,5))
-        with image_column:
-            st.image(img_quest)
-        with text_column:
-            st.subheader("Data Analytics Intern, [Quest](https://quest-inc.co)")
-            st.write("*Feb to May 2022*")
-            st.markdown("""
-            - Conducted cohort analysis and presented Tableau dashboards to company’s co-founders for boosting user acquisition and retention rates of flagship mobile application
-            - Streamlined data cleaning and dashboarding procedures for future data interns using Python (Pandas) and Tableau, resulting in standardised SOPs for company’s product analytics
-            - Wrote test cases for user acceptance testing of ’like’ feature, managing both front-end functionality and back-end usage tracking, resulting in increased user engagement and new downloads
+    # Assuming 'experiences' is a list of dictionaries containing experience details
+    experiences = [
+        {
+            'image_url': img_penn,
+            'position': "NLP Research Assistant - Cognitive Computation Group",
+            'duration': "*May 2024 to Present*",
+            'company_name': "University of Pennsylvania",
+            'company_url': "https://nlp.cis.upenn.edu/",
+            'description': "- Created a novel benchmark to evaluate cognitive capabilities of large multimodal models, utilizing complex charts as visual contexts.\n"
+                           "- Designed and created end-to-end pipeline for dataset generation integrating APIs of Gen-AI models viz. GPT-4o, Gemini 1.5 Pro and Selenium for Web Automation.\n"
+                           "- Implemented statistical analysis and clustering algorithms to process, group 6532 charts and CSVs into structurally relevant, insightful data.\n"
+                           "- Engineered custom web application using Streamlit and Firebase in 3 days, streamlining collection of human generated QA pairs across distinct categories.",
+            'skills': "`VLMs` `Web Automation` `Roboflow` `GenerativeAI` `Data Analytics` `Streamlit` `Firebase`"
+        },
+        {
+            'image_url': img_cisco,
+            'position': "Cloud Engineer",
+            'duration': "*June 2022 to July 2023*",
+            'company_name': "Cisco",
+            'company_url': "https://www.cisco.com/site/in/en/index.html",
+            'description': "- Configured alerts and metrics for storage and service availability.\n"
+                           "- Created visually intuitive dashboards for real-time insights.\n"
+                           "- Automated the EKS upgrade process and fixed security vulnerabilities.",
+            'skills': "`Python` `AWS` `Prometheus` `Grafana` `Terraform` `Docker` `Git` `Jira` `Confluence`"
+        },
+        {
+            'image_url': img_sg,
+            'position': "Software Engineer",
+            'duration': "*June 2020 to June 2022*",
+            'company_name': "Société Générale",
+            'company_url': "https://www.societegenerale.com/en",
+            'description': "- Led the full software development life cycle for crucial features.\n"
+                           "- Automated and scaled instance patching process to 1500+ instances, eliminating manual efforts and support assistance using Airflow.\n"
+                           "- Boosted service availability by delivering capacity planning feature and configuring rolling updates cutting down deployment time by 50%.\n"
+                           "- Designed and developed a micro-service based, workflow logging, and monitoring system which catalyzed 20% surge in service adoption.",
+            'skills': "`Airflow` `API Development` `Kubernetes` `Jenkins` `Terraform` `Docker`"
+        },
+        {
+            'image_url': img_sg,
+            'position': "Software Engineer Intern",
+            'duration': "*May to August 2020*",
+            'company_name': "Société Générale",
+            'company_url': "https://www.societegenerale.com/en",
+            'description': "- Spearheaded front line tasks and production support.\n"
+                           "- Researched architecture designs and service migration plans.",
+            'skills': "`Airflow` `API Development` `Docker` `System Architecture` `Devops`"
+        },
+        {
+            'image_url': img_smartek,
+            'position': "NLP Intern",
+            'duration': "*February to May 2022*",
+            'company_name': "SmarTek21",
+            'company_url': "https://smartek21.com/",
+            'description': "- Created a Python app for text-to-speech synthesis.\n"
+                           "- Implemented Tkinter, PyPDF2, and Pyttsx3 for graphical interface, PDF handling, and speech functionality.\n"
+                           "- Incorporated Google Speech Recognition API for speech-to-text capabilities.",
+            'skills': "`Python` `GUI Programming` `NLP`"
+        },
+        {
+            'image_url': img_drdo,
+            'position': "Software Intern",
+            'duration': "*January to May 2021*",
+            'company_name': "DRDO",
+            'company_url': "https://drdo.gov.in/drdo/",
+            'description': "- Developed a Human Machine Interface module for the Operator Control Unit of an Unmanned Ground Vehicle.",
+            'skills': "`Java` `Networking/Socket Programming` `LabView`"
+        }
+    ]
 
-            `Python` `R` `Tableau` `Excel` `Figma` `Asana` `ClickUp` `Google Analytics` `Retool`
-            """)
-    with st.container():
-        image_column, text_column = st.columns((1,5))
-        with image_column:
-            st.image(img_sshsph)
-        with text_column:
-            st.subheader("Public Health Intern, [Saw Swee Hock School of Public Health](https://sph.nus.edu.sg/)")
-            st.write("*January to May 2021*")
-            st.markdown("""
-            - Conducted literature reviews and summarized papers related to public health
-            - Drafted case study report on British population health system, including impacts from COVID-19
-            - Collaborated with other students to compare successes and challenges of Britain, Canada and New Zealand’s healthcare systems
-            """)
-    with st.container():
-        image_column, text_column = st.columns((1,5))
-        with image_column:
-            st.image(img_iasg)
-        with text_column:
-            st.subheader("Data Migration Intern, [Immigration@SG LLP](https://iasg.com.sg/)")
-            st.write("*October 2020 to January 2021* | [*Testimonial*](https://drive.google.com/file/d/11qFI-9TMfjOk1OxuyQ9ho9A7D6KuIsXp/view?usp=sharing)")
-            st.markdown("""
-            - Cleaned over 30,000 records using Pandas to facilitate smooth data migration into new CRM system
-            - Derived customer segmentation models using regression models and market basket analysis (association rule mining) to improve company’s marketing strategies
-            - Completed time series analysis using past sales data to forecast future monthly revenue
+    # Create rows with 2 experiences side by side
+    for i in range(0, len(experiences), 2):
+        with st.container():
+            cols = st.columns(2)
+            for idx, col in enumerate(cols):
+                if i + idx < len(experiences):
+                    exp = experiences[i + idx]
+                    with col:
+                        st.image(exp['image_url'], width=300)
+                        st.subheader(exp['position'])
+                        st.write(exp['duration'])
+                        st.markdown(f"**[{exp['company_name']}]({exp['company_url']})**")
+                        st.markdown(f"- {exp['description']}")
+                        st.markdown(f"`{exp['skills']}`")
 
-            `Excel` `ggplot2` `Python` `pandas` `R`
-            """)
-    with st.container():
-        image_column, text_column = st.columns((1,5))
-        with image_column:
-            st.image(img_yll)
-        with text_column:
-            st.subheader("Temporary Management Support Staff, [Yong Loo Lin School of Medicine](https://medicine.nus.edu.sg/)")
-            st.write("*February to June 2019*")
-            st.markdown("""
-            - Answered up to 100 different queries daily regarding undergraduate admissions
-            - Managed venue preparations for admissions interviews involving over 1,000 candidates over the span of 2 weeks
-            - Supported set-up of faculty booth for NUS Open House, with an estimated attendance of 30,000 visitors in one day
-            """)
-    with st.container():
-        image_column, text_column = st.columns((1,5))
-        with image_column:
-            st.image(img_saf)
-        with text_column:
-            st.subheader("Administrative Support Assistant, [Singapore Armed Forces](https://www.mindef.gov.sg/web/portal/mindef/home)")
-            st.write("*January 2017 to January 2019* | [*Testimonial*](https://drive.google.com/file/d/1O6Yu0P65dU8LCSDuXkf9BvlQJoz_5mRW/view?usp=sharing)")
-            st.markdown("""
-            - Assisted in organising division-level In-Camp Trainings, conferences and welfare events
-            - Handled daily administration of Operations Branch, including indentation of office equipment, budget management and food rations
-            - Promoted to Corporal First Class (CFC) for outstanding efforts
-            
-            `Excel` `GeBiz` `GIS` `Outlook` `PowerPoint` `Word`
-            """)
     st.markdown('''
     <style>
     [data-testid="stMarkdownContainer"] ul{
@@ -546,500 +435,202 @@ elif choose == "Experience":
     }
     </style>
     ''', unsafe_allow_html=True)
-#st.write("##")
 
-# Create section for Technical Skills
 elif choose == "Technical Skills":
-    #st.write("---")
-    st.header("Technical Skills")
-    txt3("Programming Languages","`R`, `Python`, `SQL`, `Java`, `Stata`, `MATLAB`")
-    txt3("Academic Interests","`Data Visualization`, `Market Basket Analysis`, `Recommendation Systems`, `Natural Language Processing`")
-    txt3("Data Visualization", "`ggplot2`, `matplotlib`, `seaborn`, `Plotly`, `Librosa`, `Folium`, `Gephi`, `GIS`, `Tableau`, `Power BI`, `Google Data Studio`, `Domo`, `Google Analytics`")
-    txt3("Database Systems", "`MySQL`, `PostgreSQL`, `SQLite`, `NoSQL`, `Google BigQuery`, `Cloud Firestore`, `InfluxDB`, `ScyllaDB`")
-    txt3("Cloud Platforms", "`Google Cloud Platform`, `Amazon Web Services`, `Heroku`, `Streamlit Cloud`, `Render`, `Hugging Face`, `Minio`")
-    txt3("Natural Language Processing", "`NLTK`, `Word2Vec`, `TF-IDF`, `TextStat`")
-    txt3("Version Control", "`Git`, `Docker`, `MLFlow`")
-    txt3("Design and Front-end Development", "`Canva`, `Figma`, `HTML`, `CSS`, `Streamlit`, `Wordpress`, `Webflow`")
-    txt3("Data Science Techniques", "`Regression`, `Clustering`, `Association Rules Mining`, `Random Forest`, `Decison Trees`, `Principal Components Analysis`, `Text Classification`, `Sentiment Analysis`, `Matrix Factorisation`, `Collaborative Filtering`")
-    txt3("Machine Learning Frameworks", "`Numpy`, `Pandas`, `Scikit-Learn`, `TensorFlow`, `Keras`, `JAX`")
-    txt3("Task Management Tools", "`Asana`, `Notion`, `ClickUp`, `Slack`, `Jira`, `Confluence`, `Miro`, `Mural`")
-    txt3("Miscellaneous", "`Google Firebase`, `Microsoft Office`, `Retool`, `Google Ads`")
+    # Define skills categories with images and text
+    software_engineering_skills = [
+        {"name": "Python", "image_url": "images/skills/python.svg"},
+        {"name": "Java", "image_url": "images/skills/java.svg"},
+        {"name": "Flask-Restful APIs", "image_url": "images/skills/flask.svg"},
+        {"name": "Firebase", "image_url": "images/skills/firebase.svg"},
+        {"name": "Jenkins CI/CD", "image_url": "images/skills/jenkins.svg"},
+        {"name": "JIRA", "image_url": "images/skills/Jira.svg"},
+        {"name": "Confluence", "image_url": "images/skills/Confluence.svg"},
+        {"name": "SQL", "image_url": "images/skills/sql.svg"},
+        {"name": "Hugging Face", "image_url": "images/skills/huggface.png"},
+        {"name": "RoboFlow", "image_url": "images/skills/roboflow.jpg"},
+        {"name": "Numpy", "image_url": "images/skills/Numpy.svg"},
+        {"name": "Pandas", "image_url": "images/skills/Pandas.png"},
+        {"name": "PyTorch", "image_url": "images/skills/Pytorch.svg"},
+        {"name": "Scikit-learn", "image_url": "images/skills/scikit-learn.svg"},
+        {"name": "PostgresDB", "image_url": "images/skills/PostgresSQL.svg"},
+        {"name": "Apache Spark", "image_url": "images/skills/spark.svg"},
+        {"name": "Apache Kafka", "image_url": "images/skills/kafka.svg"},
+        {"name": "Apache Airflow", "image_url": "images/skills/airflow.svg"},
+        {"name": "AWS", "image_url": "images/skills/icons8-amazon-web-services.svg"},
+        {"name": "Linux", "image_url": "images/skills/linux.svg"},
+        {"name": "Docker", "image_url": "images/skills/icons8-docker.svg"},
+        {"name": "Kubernetes", "image_url": "images/skills/kubernetes.svg"},
+        {"name": "Helm", "image_url": "images/skills/helm.svg"},
+        {"name": "Terraform", "image_url": "images/skills/terraform.svg"},
+        {"name": "Grafana", "image_url": "images/skills/grafana.svg"},
+        {"name": "Prometheus", "image_url": "images/skills/prometheus.svg"},
+        {"name": "Bash/Shell Scripting", "image_url": "images/skills/bash.svg"},
+        {"name": "Microservices", "image_url": "images/skills/microservices.svg"}
+    ]
 
+    # Function to display skills with images
+    def display_skills_in_rows(skills):
+        num_skills = len(skills)
+        rows = (num_skills // 5) + (1 if num_skills % 5 > 0 else 0)  # Calculate number of rows needed
+        
+        for i in range(rows):
+            cols = st.columns(5)  # Create 5 columns for each row
+            for j in range(5):
+                idx = i * 5 + j
+                if idx < num_skills:
+                    with cols[j]:
+                        try:
+                            st.image(skills[idx]['image_url'], width=40)
+                            st.write(skills[idx]['name'])
+                        except:
+                            continue
+
+    # Display skills categories
+    display_skills_in_rows(software_engineering_skills)
+
+    # st.write("**DevOps-Cloud:**")
+    # display_skills(devops_cloud_skills)
+
+# For Certifications
+elif choose == "Certifications":
+    # Data for certifications
+    certifications = [
+        {
+            'name': 'Machine Learning in Production',
+            'issuer': 'DeepLearning.AI',
+            'date_issued': 'Jul 2024',
+            'skills': 'Machine Learning, MLOps',
+            'credential_url': 'https://www.coursera.org/account/accomplishments/verify/UK7CZEHMANGK',
+            'image_url': 'images/deeplai.png'
+        },
+        {
+            'name': 'Oracle Cloud Generative AI Certified Professional',
+            'issuer': 'Oracle',
+            'date_issued': 'Jun 2024',
+            'expiry_date': 'Jun 2026',
+            'skills': 'Oracle Cloud, Generative AI',
+            'credential_url': 'https://brm-certview.oracle.com/ords/certview/ecertificate?ssn=OC5078969&trackId=OCI2024GAIOCP&key=abc99789ba478af4aff1515997c13536da339489',
+            'image_url': 'images/oci.png'
+        },
+        {
+            'name': 'AWS Certified Solutions Architect',
+            'issuer': 'Udemy',
+            'date_issued': 'May 2024',
+            'credential_url': 'https://www.udemy.com/certificate/UC-3bdd35e3-a356-41eb-b0f4-e94e86d05bd2/',
+            'image_url': 'images/aws.png'
+        },
+        {
+            'name': 'Microsoft Technology Associate: Software Development Fundamentals (MTA)',
+            'issuer': 'Microsoft 365',
+            'date_issued': 'Jun 2019',
+            'credential_id': 'wLkHa-FaXo',
+            'credential_url': 'http://verify.certiport.com',
+            'image_url': 'images/ms.png'
+        },
+        {
+            'name': 'Introduction to Big Data',
+            'issuer': 'Coursera',
+            'date_issued': 'Nov 2018',
+            'credential_url': 'https://www.coursera.org/account/accomplishments/certificate/Q8WQYX4VJTCG',
+            'image_url': 'images/coursera.png'
+        },
+        {
+            'name': 'Fundamentals of Network Communication',
+            'issuer': 'Coursera',
+            'date_issued': 'Apr 2018',
+            'credential_url': 'https://www.coursera.org/account/accomplishments/certificate/CW6JXKZ7XZ2U',
+            'image_url': 'images/coursera.png'
+        },
+    ]
+
+    # Create rows with 3 certifications each
+    for i in range(0, len(certifications), 3):
+        cols = st.columns(3)
+        for idx, col in enumerate(cols):
+            if i + idx < len(certifications):
+                cert = certifications[i + idx]
+                with col:
+                    st.image(cert['image_url'], width=200)
+                    st.markdown(f"**[{cert['name']}]({cert['credential_url']})**")
+                    st.markdown(f"Issued by {cert['issuer']} in {cert['date_issued']}")
+                    if 'expiry_date' in cert:
+                        st.markdown(f"Expires {cert['expiry_date']}")
+                    if 'skills' in cert:
+                        st.markdown(f"Skills: {cert['skills']}")
+                    if 'credential_id' in cert:
+                        st.markdown(f"Credential ID: {cert['credential_id']}")
 # Create section for Education
 #st.write("---")
 elif choose == "Education":
-    st.header("Education")
-    selected_options = ["Summary", "Modules"
-                        ]
-    selected = st.selectbox("Which section would you like to read?", options = selected_options)
-    st.write("Current selection:", selected)
-    if selected == "Summary":
-        st.subheader("Summary")
-        st.write("*Summary of education from primary school till university*")
-        with st.container():
-            image_column, text_column = st.columns((1,2.5))
-            with image_column:
-                st.image(img_nus)
-            with text_column:
-                st.subheader("Bachelor of Science - [Data Science and Analytics](https://www.stat.nus.edu.sg/wp-content/uploads/sites/8/2022/12/NUS-CHS-DSA-Print-FA.pdf), [National University of Singapore](https://nus.edu.sg) (2020-2024)")
-                st.write("Relevant Coursework: Computers and the Humanities, Convex Optimization, Data Science in Practice, Data Structures and Algorithms, Data Visualization, Database Technology and Management, Linear Algebra, Multivariable Calculus, Optimization for Large-Scale Data-Driven Inference, Probability, Programming Tools for Economics, Regression Analysis, Statistical Learning")
-                st.markdown("""
-                - [NUS Product Club](https://linkedin.com/company/nusproductclub) - Co-founder & President (2023-24)
-                - [NUS Statistics and Data Science Society](https://sites.google.com/view/nussds/home) - President (2022), Marketing Director (2021-22)
-                - [Google Developer Student Clubs NUS](https://dsc.comp.nus.edu.sg/) - Deputy Head of Finance (2021-22)
-                """)
-        with st.container():
-            image_column, text_column = st.columns((1,2.5))
-            with image_column:
-                st.image(img_poc)
-            with text_column:
-                st.subheader("Bachelor of Science - Pharmaceutical Science, [National University of Singapore](https://nus.edu.sg) (2019)")
-                st.write("Coursework: Foundations of Medicinal Chemistry, Pharmaceutical Biochemistry, Statistics for Life Sciences, Human Anatomy and Physiology, Quantitative Reasoning")
-                st.markdown("""
-                Withdrew from course in 2020, before performing a clean slate transfer to pursue a Bachelor's Degree in Data Science and Analytics
-                - [NUS Students' Science Club](https://www.nussciencelife.com/) - Marketing Executive, Welfare Subcommittee
-                - Pharmaceutical Science (Class of 2023) - Assistant Class Representative
-                """)
-        with st.container():
-            image_column, text_column = st.columns((1,2.5))
-            with image_column:
-                st.image(img_tpjc)
-            with text_column:
-                st.subheader("GCE A Level - [Tampines Junior College](https://www.tmjc.moe.edu.sg/our-heritage/tampines-jc/) (2015 - 2016)")
-                st.write("Coursework: H2 Chemistry, H2 Economics, H2 Mathematics, H1 Project Work, H1 Chinese, H1 History")
-                st.markdown(""" 
-                - Track and Field - 100m (2016 A Division Semi-finalist), 200m, 4x100m
-                - TPJC Economics and Financial Literacy Fair 2015 - Games Facilitator
-                """)
-        with st.container():
-            image_column, text_column = st.columns((1,2.5))
-            with image_column:
-                st.image(img_sji)
-            with text_column:
-                st.subheader("GCE O Level - [Saint Joseph's Institution](https://www.sji.edu.sg/) (2012 - 2014)")
-                st.write("Coursework: English, Mathematics, Additional Mathematics, Physics, Chemistry, History, Geography Elective, Chinese")
-                st.markdown(""" 
-                - Track and Field (Long Jump, 100m)
-                - [Business Design Thinking](https://www.sp.edu.sg/sp/news/sp/Secondary-students-learn-to-innovate)
-                - Josephian International Experience Programme (Siem Reap, Cambodia)
-                """)
-        with st.container():
-            image_column, text_column = st.columns((1,2.5))
-            with image_column:
-                st.image(img_gmss)
-            with text_column:
-                st.subheader("Secondary One - [Geylang Methodist School (Secondary)](https://www.geylangmethodistsec.moe.edu.sg/) (2011)")
-                st.write("Coursework: English, Mathematics, Science, History, Geography, Literature, Chinese, Design & Technology, Home Economics")
-                st.markdown(""" 
-                - Volleyball
-                """)
-        with st.container():
-            image_column, text_column = st.columns((1,2.5))
-            with image_column:
-                st.image(img_sjij)
-            with text_column:
-                st.subheader("Primary School Leaving Examination - [Saint Joseph's Institution Junior](https://www.sjijunior.moe.edu.sg/) (2005 - 2010)")
-                st.write("Coursework: English, Mathematics, Science, Chinese, Higher Chinese")
-                st.markdown(""" 
-                - Art Club
-                """)
-    elif selected == "Modules":
-        st.subheader("Modules")
-        st.write("*List of modules taken at National University of Singapore*")
-        with st.container():
-            sem1, mid, sem2 = st.columns((1,0.1,1))
-            with sem1:
-                st.write("**Academic Year 2019/20 Semester 1**")
-                st.markdown("""
-                |Code|Module Title                       |Workload|
-                |--------|--------------------------------------|---------|
-                |AY1130| Human Anatomy and Physiology I       |4 MCs|
-                |GER1000| Quantitative Reasoning              |4 MCs|
-                |PR1110A| Foundations for Medicinal Chemistry |4 MCs|
-                |PR1111A|Pharmaceutical Biochemistry          |4 MCs|
-                |ST1232| Statistics for Life Sciences         |4 MCs|
-                """)
-                st.write("")
-                st.markdown("""
-                Total Workload for Semester: **20 Modular Credits (MCs)**
-                """)
-            with mid:
-                st.empty()
-            with sem2:
-                st.write("**Academic Year 2020/21 Semester 1**")
-                st.markdown("""
-                |Code|Module Title                       |Workload|
-                |--------|--------------------------------------|---------|
-                |CS1010S|Programming Methodology|4 MCs|
-                |DSA1101|Introduction to Data Science|4 MCs|
-                |GER1000|Quantitative Reasoning|4 MCs|
-                |MA1102R|Calculus|4 MCs|
-                |SP1541|Exploring Science Communication Through Popular Science|4 MCs|
-                """)
-                st.write("")
-                st.markdown("""
-                Total Workload for Semester: **20 Modular Credits (MCs)**
-                """)
-        with st.container():
-            sem1, mid, sem2 = st.columns((1,0.1,1))
-            with sem1:
-                st.write("**Academic Year 2020/21 Semester 2**")
-                st.markdown("""
-                |Code|Module Title                       |Workload|
-                |--------|--------------------------------------|---------|
-                |CFG1002|Career Catalyst|2 MCs|
-                |EC1301|Principles of Economics|4 MCs|
-                |GEQ1000|Asking Questions|4 MCs|
-                |GES1010|Nation-Building in Singapore|4 MCs|
-                |GET1030|Computers and the Humanities|4 MCs|
-                |MA1101R|Linear Algebra I|4 MCs|
-                |ST2131|Probability|4 MCs|
-                """)
-                st.write("")
-                st.markdown("""
-                Total Workload for Semester: **26 Modular Credits (MCs)**
-                """)
-            with mid:
-                st.empty()
-            with sem2:
-                st.write("**Academic Year 2020/21 Special Term (Part II)**")
-                st.markdown("""
-                |Code|Module Title                       |Workload|
-                |--------|--------------------------------------|---------|
-                |CS2040|Data Structures and Algorithms|4 MCs|
-                """)
-                st.write("")
-                st.markdown("""
-                Total Workload for Semester: **4 Modular Credits (MCs)**
-                """)
-        with st.container():
-            sem1, mid, sem2 = st.columns((1,0.1,1))
-            with sem1:
-                st.write("**Academic Year 2021/22 Semester 1**")
-                st.markdown("""
-                |Code|Module Title                       |Workload|
-                |--------|--------------------------------------|---------|
-                |DSA2102|Essential Data Analytics Tools: Numerical Computation|4 MCs|
-                |EC2101|Microeconomic Analysis I|4 MCs|
-                |EC2102|Macroeconomic Analysis I|4 MCs|
-                |EC2204|Financial Accounting for Economists|4 MCs|
-                |EC3305|Programming Tools for Economics|4 MCs|
-                |GEH1049|Public Health in Action|4 MCs|
-                """)
-                st.write("")
-                st.markdown("""
-                Total Workload for Semester: **24 Modular Credits (MCs)**
-                """)
-            with mid:
-                st.empty()
-            with sem2:
-                st.write("**Academic Year 2021/22 Semester 2**")
-                st.markdown("""
-                |Code|Module Title                       |Workload|
-                |--------|--------------------------------------|---------|
-                |ALS1010|Learning to Learn Better|2 MCs|
-                |DSA2101|Essential Data Analytics Tools: Data Visualization|4 MCs|
-                |GES1037|A History of Singapore in Ten Objects|4 MCs|
-                |IS1103|Ethics in Computing|4 MCs|
-                |IT2002|Database Technology and Management|4 MCs|
-                |MA2104|Multivariable Calculus|4 MCs|
-                |ST2132|Mathematical Statistics|4 MCs|
-                """)
-                st.write("")
-                st.markdown("""
-                Total Workload for Semester: **26 Modular Credits (MCs)**
-                """)
-        with st.container():
-            sem1, mid, sem2 = st.columns((1,0.1,1))
-            with sem1:
-                st.write("**Academic Year 2022/23 Semester 1**")
-                st.markdown("""
-                |Code|Module Title                       |Workload|
-                |--------|--------------------------------------|---------|
-                |CFG1003|Financial Wellbeing - Introduction|0 MCs|
-                |CS3244|Machine Learning|4 MCs|
-                |DSA3101|Data Science in Practice|4 MCs|
-                |DSA3102|Essential Data Analytics Tools: Convex Optimization|4 MCs|
-                |ST3131|Regression Analysis|4 MCs|
-                |ST3248|Statistical Learning I|4 MCs|
-                """)
-                st.write("")
-                st.markdown("""
-                Total Workload for Semester: **20 Modular Credits (MCs)**
-                """)
-            with mid:
-                st.empty()
-            with sem2:
-                st.write("**Academic Year 2022/23 Semester 2**")
-                st.markdown("""
-                |Code|Module Title                       |Workload|
-                |--------|--------------------------------------|---------|
-                |DSA4212|Optimization for Large-Scale Data-Driven Inference|4 MCs|
-                |LSM1301|General Biology|4 MCs|
-                |ST4248|Statistical Learning II|4 MCs|
-                """)
-                st.write("")
-                st.markdown("""
-                Total Workload for Semester: **12 Modular Credits (MCs)**
-                """)
-        with st.container():
-            sem1, mid, sem2 = st.columns((1,0.1,1))
-            with sem1:
-                st.write("**Academic Year 2023/24 Semester 1**")
-                st.markdown("""
-                |Code|Module Title                       |Workload|
-                |--------|--------------------------------------|---------|
-                |CS4225|Big Data Systems for Data Science|4 MCs|
-                |DSA4199|Applied Project in Data Science and Analytics|8 MCs|
-                """)
-                st.write("")
-                st.markdown("""
-                Total Workload for Semester: **12 Modular Credits (MCs)**
-                """)
-            with mid:
-                st.empty()
-            with sem2:
-                st.write("**Academic Year 2022/23 Semester 2 (Expected)**")
-                st.markdown("""
-                |Code|Module Title                       |Workload|
-                |--------|--------------------------------------|---------|
-                |DSA426X|Sense-Making Case Analysis|4 MCs|
-                |ST4234|Bayesian Statistics|4 MCs|
-                |DSA4199|Applied Project in Data Science and Analytics|8 MCs|
-                """)
-                st.write("")
-                st.markdown("""
-                Total Workload for Semester: *16 Modular Credits (MCs)**
-                """)
-        with st.container():
-            left, mid, right = st.columns((0.1,1,0.1))
-            with left:
-                st.empty()
-            with mid:
-                st.write("**Graduation Requirements**")
-                st.image(img_dsa)
-            with right:
-                st.empty()
-    #elif selected == "Module Reviews":
-        #st.subheader("Module Reviews")
-        #st.write("*Reviews for selected modules taken in university*")
+    with st.container():
+        image_column, text_column = st.columns((1,2.5))
+        with image_column:
+            st.image(img_frenx)
+        with text_column:
+            st.subheader("Master of Science and Engineering - Computer and Information Science, [University of Pennsylvania](https://www.upenn.edu/) (2023-2025)")
+            st.write("GPA: 4.0/4.0")
+            st.write("Coursework: Natural Lanaguage Processing, Computer Vision, Analysis of Algorithms, Big Data and Cloud, Artificial Intelligence, Applied Machine Learning")
+
+    with st.container():
+        image_column, text_column = st.columns((1,2.5))
+        with image_column:
+            st.image(img_vit)
+        with text_column:
+            st.subheader("Bachelor of Technology - Information Technology, [VIT Vellore](https://vit.ac.in/) (2016-2020)")
+            st.write("GPA: 9.01/10")
+            st.write("Relevant Coursework: Applied Linear Algebra, Machine Learning, Big Data, Human Computer Interaction, Data Structures and Algorithms, Database Managment Systems, Networking, Operating Systems, Advanced Java Programming, Mobile Application Development, Web Programming")
+            st.markdown("""
+            - [VIT Dance Club]- Team Lead & Board Member (2018-2020)
+            """)
 
 
 elif choose == "Projects":
     # Create section for Projects
     #st.write("---")
-    st.header("Projects")
+    st.header("Recent Projects")
+
     with st.container():
         text_column, image_column = st.columns((3,1))
         with text_column:
-            st.subheader("Blockchain Social Media Webscraper")
-            st.write("*Project for US-based stealth startup, Bitmetrix.ai*")
+            st.subheader("Data Driven Real Estate Forecasting")
             st.markdown("""
-            - Utilised snscrape to scrape tweets from top blockchain websites such as CoinGecko and CoinMarketCap
-            - Built webscraper using BeautifulSoup4 to scrape content from fintech news websites such as https://blockchain.news
-            """)
-            # st.write("[Github Repo](https://github.com/harrychangjr/sales-prediction)")
-            mention(label="Github Repo", icon="github", url="https://github.com/harrychangjr/blockchain-webscraping",)
-        with image_column:
-            st.image(images_projects[14])
-    with st.container():
-        text_column, image_column = st.columns((3,1))
-        with text_column:
-            st.subheader("Enhanced TikTok Analytics Dashboard")
-            st.write("*Self-initiated project*")
-            st.markdown("""
-            - Provided options to plot Tiktok user overview data using 3D lineplots, 3D scatterplots, 3D surfaceplots and radar chart from Plotly
-            - Filtered number of hashtags per Tiktok video to investigate relationship between hashtag count and other variables: views, comments, likes and shares
-            - Performed hashtag analysis using Word2Vec to calculate cosine similarity scores and deduce correlation with average performance scores of each hashtag
-            """)
-            # st.write("[Github Repo](https://github.com/harrychangjr/sales-prediction)")
-            mention(label="Streamlit App", icon="streamlit", url="https://huggingface.co/spaces/harrychangjr/tiktok_analytics",)
-            mention(label="Github Repo", icon="github", url="https://github.com/harrychangjr/tiktok-analytics",)
-        with image_column:
-            st.image(images_projects[13])
-    with st.container():
-        text_column, image_column = st.columns((3,1))
-        with text_column:
-            st.subheader("Creating Sales Volume Prediction Model with Regression Methods")
-            st.write("*Self-initiated project based on e-commerce case study*")
-            st.markdown("""
-            - Conducted exploratory data analysis (EDA) to identify relationships between variables using correlation heatmaps and histograms
-            - Trained and compared multiple regression, random forest and XGBoost to build optimal model for sales volume prediction
-            - Performed randomized search with cross-validation to increase performance of random forest regressor and reduce MSE
-            """)
-            # st.write("[Github Repo](https://github.com/harrychangjr/sales-prediction)")
-            mention(label="Github Repo", icon="github", url="https://github.com/harrychangjr/sales-prediction",)
-        with image_column:
-            st.image(images_projects[0])
-    with st.container():
-        text_column, image_column = st.columns((3,1))
-        with text_column:
-            st.subheader("Optimising Article Quality with ChatGPT and NLP")
-            st.write("*Self-initiated project using past articles written for module SP1541: Exploring Science Communication in Popular Science in Academic Year 2020/21 Semester 1*")
-            st.markdown("""
-            - Preliminary analysis - comparing word counts, readability scores and sentiment (compound) scores of all 6 article variants using NLTK and Textstat
-            - Generated word clouds to highlight frequently used words in each article variant
-            - Identified top 10 most commonly used words between variants of the same article to assess suitability of ChatGPT in enhancing article quality
-            """)
-            #st.write("[Github Repo](https://github.com/harrychangjr/sp1541-nlp)")
-            mention(label="Streamlit App", icon="streamlit", url="https://sp1541-nlp.streamlit.app",)
-            mention(label="Github Repo", icon="github", url="https://github.com/harrychangjr/sp1541-nlp",)
-        with image_column:
-            st.image(images_projects[1])
-    with st.container():
-        text_column, image_column = st.columns((3,1))
-        with text_column:
-            st.subheader("Statistical Learning: Analysis on Video Game Sales")
-            st.write("*Completed project within 48 hours for module ST4248: Statistical Learning II in Academic Year 2022/23 Semester 2*")
-            #st.write("Methods performed on [Kaggle dataset](https://www.kaggle.com/rush4ratio/video-game-sales-with-ratings):")
-            st.markdown("""
-            - Utilised multiple regression to investigate impact of publishers on global sales by regression coefficient, including performing one-hot encoding on 'Publisher' categorical variable
-            - Compared performances of multiple linear regression, random forest and XGBoost to predict global sales using critic scores and user scores from Metacritic
-            - Trained linear mixed-effects model to investigate impact of publishers, platform and genres in global sales
-            """)
-            #st.write("[Github Repo](https://github.com/harrychangjr/st4248-termpaper) | [Term Paper](https://github.com/harrychangjr/st4248-termpaper/blob/main/ST4248%20Term%20Paper%20(A0201825N)%20v5.pdf)")
-            mention(label="Github Repo", icon="github", url="https://github.com/harrychangjr/st4248-termpaper",)
-        with image_column:
-            st.image(images_projects[2])
-    with st.container():
-        text_column, image_column = st.columns((3,1))
-        with text_column:
-            st.subheader("Statistical Learning: Nourish Your Body with Data")
-            st.write("*Completed group project for module ST4248: Statistical Learning II in Academic Year 2022/23 Semester 2*")
-            st.markdown("""
-            - Adapted [previous project](https://drive.google.com/file/d/10ZOdQ8Q7UnevXxODAQs1YOstNSsiKh7G/view?usp=sharing) from DSA3101: Data Science in Practice, with the usage of statistical learning methods instead
-            - Performed random forest classification and clustering methods to identify different consumer segments of grocery shoppers in supermarkets
-            - Built recommendation system using matrix factorisation to recommend healthier food alternatives for grocery shoppers from different backgrounds
-            """)
-            #st.write("[Final Report](https://drive.google.com/file/d/1YuYxSTuDstSvyUa-bn782sLE5kCfbyH8/view?usp=sharing) | [Pitch Deck](https://www.canva.com/design/DAFeSnJeqgM/uXpz0kw8e7If4T1PG2tpaQ/view?utm_content=DAFeSnJeqgM&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink) | [Product Demo](https://www.youtube.com/watch?v=XMlt-kfdC7g)")
-            mention(label="Final Report", icon="📄", url="https://drive.google.com/file/d/1YuYxSTuDstSvyUa-bn782sLE5kCfbyH8/view?usp=sharing",)
-        with image_column:
-            st.image(images_projects[3])
-    with st.container():
-        text_column, image_column = st.columns((3,1))
-        with text_column:
-            st.subheader("Data Science Project on Biopics Dataset from Kaggle")
-            st.write("*Self-initiated project using various machine learning methods on [biopics dataset](https://www.kaggle.com/datasets/fivethirtyeight/fivethirtyeight-biopics-dataset)*")
-            st.markdown("""
-            - Ran regression models to predict box office revenue (linear regression, random forest, support vector machines)
-            - Used k-means clustering with principal components analysis to identify similar types of movies
-            - Built content-based recommendation system using cosine similarity to recommend similar movies based on input title
+            - Led a comprehensive real estate price prediction project, integrating socioeconomic indicators and property features. 
+            - Conducted data wrangling, cleaning, aggregation, exploratory data analysis, and PCA to prepare and optimize a dataset of over 200,000 data points.
+            - Fine-tuned diverse models, including RandomForest, XGBoost, and FeedForward Neural Network, achieving 80% accuracy by navigating challenges in data preprocessing, hyperparameter tuning, and model training
             """)
             #st.write("[Github Repo](https://github.com/harrychangjr/biopics) | [RPubs](https://rpubs.com/harrychangjr/biopics)")
-            mention(label="Github Repo", icon="github", url="https://github.com/harrychangjr/biopics",)
+            mention(label="Github Repo", icon="github", url="https://github.com/prekshivyas/CIS-595-Big-Data-Analytics",)
         with image_column:
-            st.image(images_projects[4])
+            st.image(images_projects[0])
+
     with st.container():
         text_column, image_column = st.columns((3,1))
         with text_column:
-            st.subheader("Optimisation for Large-Scale Data-Driven Inference: Anime Recommendation System")
-            st.write("*Completed assignment for module DSA4212: Optimisation for Large-Scale Data-Driven Inference in Academic Year 2022/23 Semester 2*")
+            st.subheader("Sentiment Analysis - Traditional Machine Learning vs Deep Learning")
             st.markdown("""
-            - Built recommendation system using various non-factor models, including content-based collaborative filtering and clustering
-            - Utilised matrix factorisation (single value decomposition) to optimise performance of recommendation system with lower test MSE
-            - Provided optional recommendations to further optimise performance e.g scraping additional data, using deep learning methods
+            - Pre-processed Movie Reviews and ran several traditional classfication ML Models performing extensive hyperparameter turning and dataset shifts.
+            - Developed a custom deep learning architecture for Sentiment Analysis on movie reviews using Bi-LSTM layers and GloVe embeddings.
+            - Executed rigorous hyperparameter tuning, exploring 3 different epoch counts, learning rates, batch sizes, and optimizers across long and short sentences, achieving an F1 score of 0.86.
+            """)
+            mention(label="Github Repo", icon="github", url="https://github.com/prekshivyas/CIS-5190-Applied-ML",)
+        with image_column:
+            st.image(images_projects[1])
+
+
+    with st.container():
+        text_column, image_column = st.columns((3,1))
+        with text_column:
+            st.subheader("Image Classfication - Traditional Machine Learning vs Deep Learning")
+            st.markdown("""
+            - Pre-processed ImageNet Dataset and ran traditional classfication ML Models performing extensive hyperparameter turning and dataset shifts.
+            - Improved Image Classification using a custom CNN architecture with advanced pre-processing techniques, including normalization, Gaussian blur, and augmentation via data-set shifts.
+            - Conducted a comprehensive grid search, resulting in 288 different model configurations achieving best accuracy of 86%.
             """)
             #st.write("[Github Repo](https://github.com/harrychangjr/dsa4212) | [Report](https://github.com/harrychangjr/dsa4212/blob/main/DSA4212%20Assignment%202%20Group%2039%20Report.pdf)")
-            mention(label="Github Repo", icon="github", url="https://github.com/harrychangjr/dsa4212",)
+            mention(label="Github Repo", icon="github", url="https://github.com/prekshivyas/CIS-5190-Applied-ML",)
         with image_column:
-            st.image(images_projects[5])
-    with st.container():
-        text_column, image_column = st.columns((3,1))
-        with text_column:
-            st.subheader("Optimisation for Large-Scale Data-Driven Inference: Word Embedding")
-            st.write("*Completed assigmment for module DSA4212: Optimisation for Large-Scale Data-Driven Inference in Academic Year 2022/23 Semester 2*")
-            st.markdown("""
-            - Trained Word2Vec model on 20 Newsgroups dataset from scikit-learn package in Python, which provides a number of similar words based on input word
-            - Evaluated usefulness of model by applying model to text classification (46% accuracy) and sentiment analysis (86.4% accuracy)
-            """)
-            #st.write("[Github Code](https://github.com/harrychangjr/dsa4212/blob/main/DSA4212%20Assignment%203%20Group%2039.ipynb) | [Report](https://github.com/harrychangjr/dsa4212/blob/main/DSA4212%20Assignment%203%20Group%2039%20Report.pdf)")
-            mention(label="Github Code", icon="github", url="https://github.com/harrychangjr/dsa4212/blob/main/DSA4212%20Assignment%203%20Group%2039.ipynb",)
-        with image_column:
-            st.image(images_projects[6])
-    with st.container():
-        text_column, image_column = st.columns((3,1))
-        with text_column:
-            st.subheader("Data-Driven Marketing: Exploration of cellphone billing and subscriber data")
-            st.write("*Self-initiated project based on past assignment from module BT4211: Data-Driven Marketing*")
-            st.markdown("""
-            - Performed preliminary churn analysis, customer segmentation and descriptive analysis to understand more about dataset
-            - Trained logit and probit models, as well as providing model estimations for duration models
-            - Utilised random forest classifier to predict customer churn
-            """)
-            #st.write("[Github Repo](https://github.com/harrychangjr/cellphone-billing) | [RPubs](https://rpubs.com/harrychangjr/cellphone)")
-            mention(label="Github Repo", icon="github", url="https://github.com/harrychangjr/cellphone-billing",)
-        with image_column:
-            st.image(images_projects[7])
-    with st.container():
-        text_column, image_column = st.columns((3,1))
-        with text_column:
-            st.subheader("Data Visualization: Analysis on Spotify Dataset from [tidytuesday](https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-01-21)")
-            st.write("*Completed group project for module DSA2101: Essential Data Analytics Tools: Data Visualization in Academic Year 2021/22 Semester 2*")
-            st.markdown("""
-            - Investigated variables that differentiates songs of different genres, which could be useful in designing recommendation systems
-            - Explored how do the four seasons affect number of songs produced in each period
-            - Visualizations used: ridgeline faceted density plot, boxplot, line chart, faceted donut chart
-            """)
-            #st.write("[Github Code](https://github.com/harrychangjr/dsa2101/blob/main/DSA2101_Group%20B.Rmd) | [RPubs](https://rpubs.com/harrychangjr/dsa2101-groupb)")
-            mention(label="Github Code", icon="github", url="https://github.com/harrychangjr/dsa2101/blob/main/DSA2101_Group%20B.Rmd",)
-        with image_column:
-            st.image(images_projects[8])
-    with st.container():
-        text_column, image_column = st.columns((3,1))
-        with text_column:
-            st.subheader("Computers and the Humanities: Chloropleths using Google Sheets and Folium in Python")
-            st.write("*Completed assignment for module GET1030: Computers and the Humanities in Academic Year 2020/21 Semester 2*")
-            st.markdown("""
-            - Visualized the total number of performances of A Doll's House by country, using a chloropleth from Google Sheets
-            - Drafted scatterplots and boxplots using seaborn to investigate relationship between number of events per country and number of years these plays have been performed
-            - Created chloropleth using Folium in Google Colab to compare total performance counts in China, categorised by province
-            """)
-            #st.write("[Google Sheets](https://docs.google.com/spreadsheets/d/1NBlGM7Sjcybbpl1Esa55qLRJw-Seti1LhC93EhV_68w/edit?usp=sharing) | [Google Colab](https://colab.research.google.com/drive/1RHqtb5XC7PkJDpNEb-BY3tO-8mI2j32E?usp=sharing)")
-            mention(label="Google Drive", icon="🗂️", url="https://drive.google.com/drive/folders/1Iva0oLZim6zJlAndoSzR63pUq4NCznim?usp=share_link",)
-        with image_column:
-            st.image(images_projects[9])
-    with st.container():
-        text_column, image_column = st.columns((3,1))
-        with text_column:
-            st.subheader("Computers and the Humanities: Network Analysis on Harry Potter Film Database")
-            st.write("*Completed assignment for module GET1030: Computers and the Humanities in Academic Year 2020/21 Semester 2*")
-            st.markdown("""
-            - Utilised custom Python file based on NetworkX and Glob to create networks using Harry Potter film database
-            - Drafted visualizations using matplotlib and seaborn to compare densities and weighted degree values of nodes from generated networks
-            - Customised network visualization using Gephi to investigate relationship between various Harry Potter film directors
-            """)
-            #st.write("[Github Code](https://github.com/harrychangjr/get1030/blob/main/A0201825N_GET1030_Tutorial_4.ipynb)")
-            mention(label="Github Code", icon="github", url="https://github.com/harrychangjr/get1030/blob/main/A0201825N_GET1030_Tutorial_4.ipynb",)
-        with image_column:
-            st.image(images_projects[10])
-    with st.container():
-        text_column, image_column = st.columns((3,1))
-        with text_column:
-            st.subheader("Computers and the Humanities: Text Processing and Analysis on Song Lyrics")
-            st.write("*Completed assignment for module GET1030: Computers and the Humanities in Academic Year 2020/21 Semester 2*")
-            st.markdown("""
-            - Utilised custom Python file based on NetworkX and Glob to create networks using Harry Potter film database
-            - Drafted visualizations using matplotlib and seaborn to compare proportions of nouns and verbs between different songs
-            - Analysed type/token ratios of songs from both albums to evaluate which album produced better quality songs based on words used
-            """)
-            #st.write("[Github Code](https://github.com/harrychangjr/get1030/blob/main/A0201825N%20-%20GET1030%20Tutorial%203.ipynb)")
-            mention(label="Github Code", icon="github", url="https://github.com/harrychangjr/get1030/blob/main/A0201825N%20-%20GET1030%20Tutorial%203.ipynb",)
-        with image_column:
-            st.image(images_projects[11])
-    with st.container():
-        text_column, image_column = st.columns((3,1))
-        with text_column:
-            st.subheader("Computers and the Humanities: Spotify in the Covid-19 Era")
-            st.write("*Completed group project for module GET1030: Computers and the Humanities in Academic Year 2020/21 Semester 2*")
-            st.markdown("""
-            - Compiled and scraped Spotify data from [Spotify](https://www.spotifycharts.com), [Kaggle](https://www.kaggle.com/yamaerenay/spotify-dataset-19212020-160k-tracks), and [OWID](https://ourworldindata.org/coronavirus/country/singapore) to analyse top songs played in Singapore during Covid-19
-            - Drafted Tableau dashboard to showcase correlation between various features of top songs, including tempo, acousticness and popularity
-            - Embedded 30-second snippet of featured song on dashboard for increased interactiveness
-            """)
-            #st.write("[Github Code](https://github.com/harrychangjr/get1030/blob/main/A0201825N%20-%20GET1030%20Tutorial%203.ipynb)")
-            mention(label="Final Report", icon="📄", url="https://github.com/harrychangjr/get1030/blob/main/GET1030%20Final%20Project.pdf",)
-        with image_column:
-            st.image(images_projects[12])
+            st.image(images_projects[2])
     
 elif choose == "Competitions":
     # Create section for Competitions
@@ -1168,139 +759,7 @@ elif choose == "Volunteering":
             st.empty()
         with image_column:
             st.image(images_vol[9])
-    with st.container():
-        text_column, mid, image_column = st.columns((3,0.4,1))
-        with text_column:
-            st.subheader("NUS Statistics and Data Science Society")
-            st.write("*May 2021 to November 2022*")
-            st.markdown("""
-            - President (2022) - Increased recruitment of student club by 50% while overseeing execution of career-related events and technical workshops organised by 56 members
-            - Marketing Director (2021-22) - Led 10 students to secure over $19,000 worth of sponsorships for 850 participants in annual Data Analytics Competition and increase society's merchandise sales revenue by over 50% compared to previous year
-            """)
-        with mid:
-            st.empty()
-        with image_column:
-            st.image(images_vol[0])
-    with st.container():
-        text_column, mid, image_column = st.columns((3,0.4,1))
-        with text_column:
-            st.subheader("NUS Students' Sports Club")
-            st.write("*February to August 2022*")
-            st.markdown("""
-            Publicity Executive, NUS Inter-Faculty Games
-
-            - Designed storyboard for publicity videos to hype up school-wide event
-            - Increased publicity of event through extended outreach to over 5,000 students in various Telegram groups
-            """)
-        with mid:
-            st.empty()
-        with image_column:
-            st.image(images_vol[1])
-    with st.container():
-        text_column, mid, image_column = st.columns((3,0.4,1))
-        with text_column:
-            st.subheader("Google Developer Student Clubs NUS")
-            st.write("*September 2021 to April 2022*")
-            st.markdown("""
-            Deputy Head of Finance
-
-            - Managed budget of student club alongside Core Team to ensure sufficient funds for technical workshops, hackathon and external projects
-            - Liaised with staff advisors and administrative staff to seek funding approvals and process financial claims for other student members
-            """)
-        with mid:
-            st.empty()
-        with image_column:
-            st.image(images_vol[2])
-    with st.container():
-        text_column, mid, image_column = st.columns((3,0.4,1))
-        with text_column:
-            st.subheader("NUS Students' Community Service Club")
-            st.write("*March to July 2021*")
-            st.markdown("""
-            Organising Committee, Project Safe Space
-
-            - Organised weekly sessions to empower individuals from Anglican Care Centre (Yishun) with important life skills (e.g Zumba, cooking)
-            - Drafted write-ups on psychiatric conditions to raise awareness on debunked mental health myths and promote mental welness
-            """)
-        with mid:
-            st.empty()
-        with image_column:
-            st.image(images_vol[3])
-    with st.container():
-        text_column, mid, image_column = st.columns((3,0.4,1))
-        with text_column:
-            st.subheader("NUS Students' Union")
-            st.write("*January to March 2021*")
-            st.markdown("""
-            Public Relations Executive, Open Day Student Village
-
-            - Liaised with participating student residences and clubs to increase awareness of event to prospective students
-            - Enforced rules and regulations imposed by school administrative staff to ensure smooth execution of event
-            """)
-        with mid:
-            st.empty()
-        with image_column:
-            st.image(images_vol[4])
-    with st.container():
-        text_column, mid, image_column = st.columns((3,0.4,1))
-        with text_column:
-            st.subheader("Saturday Kids")
-            st.write("*October 2020 to December 2021 - Seasonal*")
-            st.markdown("""
-            Python Instructor, Code in the Community
-
-            - Conducted weekly lessons for classes of 3-4 secondary school students on Python programming 
-            - Customised curriculum structure to suit the learning needs of students
-            """)
-        with mid:
-            st.empty()
-        with image_column:
-            st.image(images_vol[5])
-    with st.container():
-        text_column, mid, image_column = st.columns((3,0.4,1))
-        with text_column:
-            st.subheader("Singapore Institiute of Management - University of London")
-            st.write("*November 2017*")
-            st.markdown("""
-            Fundraising Volunteer, SIM-UOL Transformers
-
-            - Collected unwanted items from residents in heartland areas
-            - Successfully raised $8000 from sale of items to refurbish the homes of the less fortunate
-            """)
-        with mid:
-            st.empty()
-        with image_column:
-            st.image(images_vol[6])
-    with st.container():
-        text_column, mid, image_column = st.columns((3,0.4,1))
-        with text_column:
-            st.subheader("Tampines Junior College")
-            st.write("*March 2015 to January 2016 - Seasonal*")
-            st.markdown("""
-            Values in Action (VIA) Projects
-
-            - Climb for A Cause - Organised and participated in games and activities with members of Singapore Disability Sports Council
-            - Project Ohana - Collaborated with Kwong Wai Shiu Hospital to engage patients in handicraft and games
-            """)
-        with mid:
-            st.empty()
-        with image_column:
-            st.image(images_vol[7])
-    with st.container():
-        text_column, mid, image_column = st.columns((3,0.4,1))
-        with text_column:
-            st.subheader("Saint Joseph's Institution")
-            st.write("*June 2012 to June 2013 - Seasonal*")
-            st.markdown("""
-            Values in Action (VIA) Projects
-
-            - Josephian International Experience Programme - Conducted English lessons at orphanage in Siem Reap, Cambodia
-            - SJIJ Primary 4 Chinese Language Camp - Acted as group facilitator to orientate primary four students in Chinese lessons
-            """)
-        with mid:
-            st.empty()
-        with image_column:
-            st.image(images_vol[8])
+    
 elif choose == "Blog":
     st.header("Blog")
     selected_options = ["Overview", "Article & Essay List",
@@ -1983,7 +1442,7 @@ elif choose == "Blog":
 
         Of course, this would not have been possible without the help of our Publicity Team members, who reached out to nearly 40 other student clubs to help us increase our outreach for the event. Other NUS departments such as CFG, Faculty of Science and School of Computing also helped us to publicise our event, which was much appreciated. Indeed, we’ve learnt that it’s vital for us to maintain good relations with other like-minded student organisations to ensure the success of organising such events.
 
-        3. Failure is the key to success (by Harry)
+        3. Failure is the key to success (by Prekshi)
 
         Similar to Axel, I gave my Marketing Team members the liberty to identify potential sponsors that could support our event. Doing this would allow them to learn more about the data/tech industry in general before we would proceed to shortlist our prospective partners and/or sponsors. Our team had managed to identify many different companies from various industries, but had faced rejections in the process. Worst still, many companies did not respond to our sponsorship emails, which felt demoralising at times.
 
@@ -2354,432 +1813,7 @@ elif choose == "Blog":
         4. Pakistan Bureau of Statistics. Block Wise Provisional Summary Results of 6th Population & Housing Census-2017 [As on January 03, 2018]. Also available from http://www.pbs.gov.pk/content/block-wise-provisional-summary-results-6th-population-housing-census-2017-january-03-2018 
         5. Centers for Disease Control and Prevention. Epidemiology and Prevention of Vaccine-Preventable Diseases. Chapter 10, Measles. 8th Edition, 2004. https://www.cdc.gov/vaccines/pubs/pinkbook/meas.html 
         """)
-elif choose == "Gallery":
-    st.header("Gallery")
-    st.subheader("Some of my highlights throughout my educational years!")
-    selected_options = ["Overview", "2023", "2022", "2021", "2020", "2019", "2018", "2017", 
-                        "2016", "2015", "2014", "2013", "2012", "2011", "2010", "2009",
-                        "2008", "2007", "2006", "2005"]
-    selected = st.selectbox("Which year would you like to explore?", options = selected_options)
-    st.write("Current selection:", selected)
-    if selected == "Overview":
-        st.subheader("Overview")
-        st.markdown("""
-        > "Photos are always the greatest gifts, because the memories from them will remain forever."
-        
-        My sister said this to me when I was in primary school. Having an immature and materialistic mindset back then, I was disappointed when I did not receive a present from her back then.
 
-        The quote that she shared that day - was something that I failed to appreciate only until recently. Over the course of these past few years, I have made many memories - both good and bad - which I will fondly remember.
-
-        Thus, this section is a compilation of highlights from my educational years, starting from primary school (7 years old), until the recent day (*in progress*). These images are not only meant to remind myself of the good times that I once had with long lost friends who I hardly keep in touch with nowadays due to our busy schedules, but also serve to show potential viewers a glimpse of what my life was like beyond academics.
-
-        In particular, I hope to be able to refer to this time and time again, especially upon graduating from university and when I formally commence my full-time career.
-
-        To those viewing my website and this section in particular, enjoy the pictures!
-
-        *Note: Photos filed under each year are not necessarily posted in any particular order, as I may have forgotten the exact dates of some photos that were taken.*
-        """)
-    elif selected == "2005":
-        st.subheader("2005")
-        st.write("*Baby steps*")
-        # Load the images
-        num_images = 2
-        images_2005 = [Image.open(f"gallery/2005_{i}.jpg") for i in range(1, num_images + 1)]
-
-        # Display the images in a grid
-        num_columns = 2
-        num_rows = num_images // num_columns
-
-        for row in range(num_rows):
-            # Create a row of columns
-            columns = st.columns(num_columns)
-    
-            # Display the images in the columns
-            for col in range(num_columns):
-                index = row * num_columns + col
-                with columns[col]:
-                    st.image(images_2005[index], use_column_width=True)
-    elif selected == "2006":
-        st.subheader("2006")
-        st.write("*Settling down*")
-        # Load the images
-        num_images = 1
-        images_2006 = [Image.open(f"gallery/2006_{i}.jpg") for i in range(1, num_images + 1)]
-
-        # Display the images in a grid
-        num_columns = 1
-        num_rows = num_images // num_columns
-
-        for row in range(num_rows):
-            # Create a row of columns
-            columns = st.columns(num_columns)
-    
-            # Display the images in the columns
-            for col in range(num_columns):
-                index = row * num_columns + col
-                with columns[col]:
-                    st.image(images_2006[index], use_column_width=True)
-    elif selected == "2007":
-        st.subheader("2007")
-        st.write("To be updated!")
-    elif selected == "2008":
-        st.subheader("2008")
-        st.write("*First pivot*")
-        # Load the images
-        num_images = 1
-        images_2008 = [Image.open(f"gallery/2008_{i}.jpg") for i in range(1, num_images + 1)]
-
-        # Display the images in a grid
-        num_columns = 1
-        num_rows = num_images // num_columns
-
-        for row in range(num_rows):
-            # Create a row of columns
-            columns = st.columns(num_columns)
-    
-            # Display the images in the columns
-            for col in range(num_columns):
-                index = row * num_columns + col
-                with columns[col]:
-                    st.image(images_2008[index], use_column_width=True)
-    elif selected == "2009":
-        st.subheader("2009")
-        st.write("*Exploring myself*")
-        # Load the images
-        num_images = 1
-        images_2009 = [Image.open(f"gallery/2009_{i}.jpg") for i in range(1, num_images + 1)]
-
-        # Display the images in a grid
-        num_columns = 1
-        num_rows = num_images // num_columns
-
-        for row in range(num_rows):
-            # Create a row of columns
-            columns = st.columns(num_columns)
-    
-            # Display the images in the columns
-            for col in range(num_columns):
-                index = row * num_columns + col
-                with columns[col]:
-                    st.image(images_2009[index], use_column_width=True)
-    elif selected == "2010":
-        st.subheader("2010")
-        st.write("To be updated!")
-    elif selected == "2011":
-        st.subheader("2011")
-        st.write("*To grow in friendship, body and mind*")
-        # Load the images
-        num_images = 8
-        images_2011 = [Image.open(f"gallery/2011_{i}.jpg") for i in range(1, num_images + 1)]
-
-        # Display the images in a grid
-        num_columns = 4
-        num_rows = num_images // num_columns
-
-        for row in range(num_rows):
-            # Create a row of columns
-            columns = st.columns(num_columns)
-    
-            # Display the images in the columns
-            for col in range(num_columns):
-                index = row * num_columns + col
-                with columns[col]:
-                    st.image(images_2011[index], use_column_width=True)
-    elif selected == "2012":
-        st.subheader("2012")
-        st.write("*Back to the family*")
-        # Load the images
-        num_images = 7
-        images_2012 = [Image.open(f"gallery/2012_{i}.jpg") for i in range(1, num_images + 1)]
-
-        # Display the images in a grid
-        num_columns = 3
-        num_rows = num_images // num_columns
-
-        for row in range(num_rows):
-            # Create a row of columns
-            columns = st.columns(num_columns)
-    
-            # Display the images in the columns
-            for col in range(num_columns):
-                index = row * num_columns + col
-                with columns[col]:
-                    st.image(images_2012[index], use_column_width=True)
-    elif selected == "2013":
-        st.subheader("2013")
-        st.write("*Growing big for the first time*")
-        # Load the images
-        num_images = 11
-        images_2013 = [Image.open(f"gallery/2013_{i}.jpg") for i in range(1, num_images + 1)]
-
-        # Display the images in a grid
-        num_columns = 3
-        num_rows = num_images // num_columns
-
-        for row in range(num_rows):
-            # Create a row of columns
-            columns = st.columns(num_columns)
-    
-            # Display the images in the columns
-            for col in range(num_columns):
-                index = row * num_columns + col
-                with columns[col]:
-                    st.image(images_2013[index], use_column_width=True)
-    elif selected == "2014":
-        st.subheader("2014")
-        st.write("*Hail hail alma mater*")
-        # Load the images
-        num_images = 13
-        images_2014 = [Image.open(f"gallery/2014_{i}.jpg") for i in range(1, num_images + 1)]
-
-        # Display the images in a grid
-        num_columns = 3
-        num_rows = num_images // num_columns
-
-        for row in range(num_rows):
-            # Create a row of columns
-            columns = st.columns(num_columns)
-    
-            # Display the images in the columns
-            for col in range(num_columns):
-                index = row * num_columns + col
-                with columns[col]:
-                    st.image(images_2014[index], use_column_width=True)
-    elif selected == "2015":
-        st.subheader("2015")
-        st.write("*A leader in every student*")
-        # Load the images
-        num_images = 48
-        images_2015 = [Image.open(f"gallery/2015_{i}.jpg") for i in range(1, num_images + 1)]
-
-        # Display the images in a grid
-        num_columns = 3
-        num_rows = num_images // num_columns
-
-        for row in range(num_rows):
-            # Create a row of columns
-            columns = st.columns(num_columns)
-    
-            # Display the images in the columns
-            for col in range(num_columns):
-                index = row * num_columns + col
-                with columns[col]:
-                    st.image(images_2015[index], use_column_width=True)
-    elif selected == "2016":
-        st.subheader("2016")
-        st.write("*Big fish in a small pond*")
-        # Load the images
-        num_images = 25
-        images_2016 = [Image.open(f"gallery/2016_{i}.jpg") for i in range(1, num_images + 1)]
-
-        # Display the images in a grid
-        num_columns = 3
-        num_rows = num_images // num_columns
-
-        for row in range(num_rows):
-            # Create a row of columns
-            columns = st.columns(num_columns)
-    
-            # Display the images in the columns
-            for col in range(num_columns):
-                index = row * num_columns + col
-                with columns[col]:
-                    st.image(images_2016[index], use_column_width=True)
-    elif selected == "2017":
-        st.subheader("2017")
-        st.write("*First real break from school*")
-        # Load the images
-        num_images = 5
-        images_2017 = [Image.open(f"gallery/2017_{i}.jpg") for i in range(1, num_images + 1)]
-
-        # Display the images in a grid
-        num_columns = 2
-        num_rows = num_images // num_columns
-        remaining_images = num_images % num_columns
-
-        for row in range(num_rows + 1):  # Add 1 to include the last row
-            # Create a row of columns
-            columns = st.columns(num_columns)
-
-            # Calculate the number of columns for the current row
-            if row == num_rows:
-                num_cols_in_row = remaining_images
-            else:
-                num_cols_in_row = num_columns
-
-            # Display the images in the columns
-            for col in range(num_cols_in_row):
-                index = row * num_columns + col
-                with columns[col]:
-                    st.image(images_2017[index], use_column_width=True)
-    elif selected == "2018":
-        st.subheader("2018")
-        st.write("*Steadfast we stand*")
-        # Load the images
-        # Load the images
-        num_images = 16
-        images_2018 = [Image.open(f"gallery/2018_{i}.jpg") for i in range(1, num_images + 1)]
-
-        # Display the images in a grid
-        num_columns = 3
-        num_rows = num_images // num_columns
-        remaining_images = num_images % num_columns
-
-        for row in range(num_rows + 1):  # Add 1 to include the last row
-            # Create a row of columns
-            columns = st.columns(num_columns)
-
-            # Calculate the number of columns for the current row
-            if row == num_rows:
-                num_cols_in_row = remaining_images
-            else:
-                num_cols_in_row = num_columns
-
-            # Display the images in the columns
-            for col in range(num_cols_in_row):
-                index = row * num_columns + col
-                with columns[col]:
-                    st.image(images_2018[index], use_column_width=True)
-    elif selected == "2019":
-        st.subheader("2019")
-        st.write("*So many things to explore, yet so little time*")
-        # Load the images
-        num_images = 20
-        images_2019 = [Image.open(f"gallery/2019_{i}.jpg") for i in range(1, num_images + 1)]
-
-        # Display the images in a grid
-        num_columns = 3
-        num_rows = num_images // num_columns
-        remaining_images = num_images % num_columns
-
-        for row in range(num_rows + 1):  # Add 1 to include the last row
-            # Create a row of columns
-            columns = st.columns(num_columns)
-
-            # Calculate the number of columns for the current row
-            if row == num_rows:
-                num_cols_in_row = remaining_images
-            else:
-                num_cols_in_row = num_columns
-
-            # Display the images in the columns
-            for col in range(num_cols_in_row):
-                index = row * num_columns + col
-                with columns[col]:
-                    st.image(images_2019[index], use_column_width=True)
-
-    elif selected == "2020":
-        st.subheader("2020")
-        st.write("*Intro to Zoom University*")
-        # Load the images
-        num_images = 3
-        images_2020 = [Image.open(f"gallery/2020_{i}.jpg") for i in range(1, num_images + 1)]
-
-        # Display the images in a grid
-        num_columns = 3
-        num_rows = num_images // num_columns
-        remaining_images = num_images % num_columns
-
-        for row in range(num_rows + 1):
-            # Create a row of columns
-            columns = st.columns(num_columns)
-
-            # Calculate the number of columns for the current row
-            if row == num_rows:
-                num_cols_in_row = remaining_images
-            else:
-                num_cols_in_row = num_columns
-
-            # Display the images in the columns
-            for col in range(num_cols_in_row):
-                index = row * num_columns + col
-                with columns[col]:
-                    st.image(images_2020[index], use_column_width=True)
-
-    elif selected == "2021":
-        st.subheader("2021")
-        st.write("*Boomer in a zoomer's body*")
-        # Load the images
-        num_images = 14
-        images_2021 = [Image.open(f"gallery/2021_{i}.jpg") for i in range(1, num_images + 1)]
-
-        # Display the images in a grid
-        num_columns = 3
-        num_rows = num_images // num_columns
-        remaining_images = num_images % num_columns
-
-        for row in range(num_rows + 1):  # Add 1 to include the last row
-            # Create a row of columns
-            columns = st.columns(num_columns)
-
-            # Calculate the number of columns for the current row
-            if row == num_rows:
-                num_cols_in_row = remaining_images
-            else:
-                num_cols_in_row = num_columns
-
-            # Display the images in the columns
-            for col in range(num_cols_in_row):
-                index = row * num_columns + col
-                with columns[col]:
-                    st.image(images_2021[index], use_column_width=True)
-
-    elif selected == "2022":
-        st.subheader("2022")
-        st.write("*We are one, but we are many*")
-        # Load the images
-        num_images = 19
-        images_2022 = [Image.open(f"gallery/2022_{i}.jpg") for i in range(1, num_images + 1)]
-
-        # Display the images in a grid
-        num_columns = 3
-        num_rows = num_images // num_columns
-        remaining_images = num_images % num_columns
-
-        for row in range(num_rows + 1):  # Add 1 to include the last row
-            # Create a row of columns
-            columns = st.columns(num_columns)
-
-            # Calculate the number of columns for the current row
-            if row == num_rows:
-                num_cols_in_row = remaining_images
-            else:
-                num_cols_in_row = num_columns
-
-            # Display the images in the columns
-            for col in range(num_cols_in_row):
-                index = row * num_columns + col
-                with columns[col]:
-                    st.image(images_2022[index], use_column_width=True)
-
-    elif selected == "2023":
-        st.subheader("2023")
-        st.write("*Success - being content at the present moment*")
-        # Load the images
-        num_images = 22
-        images_2023 = [Image.open(f"gallery/2023_{i}.jpg") for i in range(1, num_images + 1)]
-
-        # Display the images in a grid
-        num_columns = 3
-        num_rows = num_images // num_columns
-        remaining_images = num_images % num_columns
-
-        for row in range(num_rows + 1):  # Add 1 to include the last row
-            # Create a row of columns
-            columns = st.columns(num_columns)
-
-            # Calculate the number of columns for the current row
-            if row == num_rows:
-                num_cols_in_row = remaining_images
-            else:
-                num_cols_in_row = num_columns
-
-            # Display the images in the columns
-            for col in range(num_cols_in_row):
-                index = row * num_columns + col
-                with columns[col]:
-                    st.image(images_2023[index], use_column_width=True)
-        st.write("...and more to come!")
 
 #elif choose == "Site Analytics":
     #st.header("Site Analytics")
@@ -2807,155 +1841,129 @@ elif choose == "Gallery":
             #st.write("...and now add `?analytics=on` to the URL to see the analytics dashboard 👀")
 
 elif choose == "Resume":   
-    resume_url = "https://drive.google.com/file/d/164EEVH6BmvC89q2M4WsBNF1JyddDAbNY/view?usp=sharing"
-    st.header("Resume")
-    st.write("*In case your current browser cannot display the PDF documents, do refer to the hyperlink below!*")
+    resume_url = "https://drive.google.com/file/d/1CPW5glbrIDu7CwS1kx-CH7EmBzy7vqE8/view"
+    st.subheader(f"[Resume]({resume_url})")
 
-    st.markdown(pdf_link(resume_url, "**Resume (1 page)**"), unsafe_allow_html=True)
-    show_pdf("HarryChang_Resume.pdf")
-    with open("HarryChang_Resume.pdf", "rb") as file:
-        btn = st.download_button(
-            label="Download Resume (1 page)",
-            data=file,
-            file_name="HarryChang_Resume.pdf",
-            mime="application/pdf"
-        )
-elif choose == "Testimonials": 
-    test_url = "https://drive.google.com/file/d/1ZyTmg_r18sUuuU5JOJBqUb2EP8MnjvJU/view?usp=sharing"  
-    st.header("Testimonials")
-    st.subheader("Some appraisals from my past referees!")
-    st.markdown(pdf_link(test_url, "**Compiled Testimonials**"), unsafe_allow_html=True)  
+
+elif choose == "Talks": 
+      
+    st.header("Conferences where I have been a Speaker and an Attendee") 
     with st.container():  
-        col1, col2, col3 = st.columns((1,1,1))
-        with col1:
-            st.subheader("SCOR")
-            show_pdf("1. SCOR.pdf")
-        with col2:
-            st.subheader("DSDS, NUS")
-            show_pdf("2. DSDS.pdf")
-        with col3:
-            st.subheader("IASG")
-            show_pdf("3. IASG.pdf")
+            st.subheader("Airflow Global Summit")
+            "Presented at the Airflow 2022 Global Summit, engaging 500+ professionals with a tech talk on efficient workflow orchestration"
+            st.markdown("[WATCH HERE !](https://www.youtube.com/watch?v=sPOLGMlL6mo)")
+            st.image(img_techtalk)
+            
     with st.container():  
-        col4, col5, col6 = st.columns((1,1,1))
-        with col1:
-            st.subheader("SAF")
-            show_pdf("4. SAF.pdf")
-        with col2:
-            st.subheader("TPJC")
-            show_pdf("5. JC.pdf")
-        with col3:
-            st.subheader("SJI")
-            show_pdf("6. SJI.pdf")
-elif choose == "Contact":
-# Create section for Contact
-    #st.write("---")
-    st.header("Contact")
-    def social_icons(width=24, height=24, **kwargs):
-        icon_template = '''
-        <a href="{url}" target="_blank" style="margin-right: 10px;">
-            <img src="{icon_src}" alt="{alt_text}" width="{width}" height="{height}">
-        </a>
-        '''
+            st.subheader("Grace Hopper Conference 2024")
+            st.text("Coming Soon!")
+# elif choose == "Contact":
+# # Create section for Contact
+#     #st.write("---")
+#     st.header("Contact")
+#     def social_icons(width=24, height=24, **kwargs):
+#         icon_template = '''
+#         <a href="{url}" target="_blank" style="margin-right: 10px;">
+#             <img src="{icon_src}" alt="{alt_text}" width="{width}" height="{height}">
+#         </a>
+#         '''
 
-        icons_html = ""
-        for name, url in kwargs.items():
-            icon_src = {
-                "linkedin": "https://cdn-icons-png.flaticon.com/512/174/174857.png",
-                "github": "https://cdn-icons-png.flaticon.com/512/25/25231.png",
-                "email": "https://cdn-icons-png.flaticon.com/512/561/561127.png"
-            }.get(name.lower())
+#         icons_html = ""
+#         for name, url in kwargs.items():
+#             icon_src = {
+#                 "linkedin": "https://cdn-icons-png.flaticon.com/512/174/174857.png",
+#                 "github": "https://cdn-icons-png.flaticon.com/512/25/25231.png",
+#                 "email": "https://cdn-icons-png.flaticon.com/512/561/561127.png"
+#             }.get(name.lower())
 
-            if icon_src:
-                icons_html += icon_template.format(url=url, icon_src=icon_src, alt_text=name.capitalize(), width=width, height=height)
+#             if icon_src:
+#                 icons_html += icon_template.format(url=url, icon_src=icon_src, alt_text=name.capitalize(), width=width, height=height)
 
-        return icons_html
-    with st.container():
-        text_column, mid, image_column = st.columns((1,0.2,0.5))
-        with text_column:
-            st.write("Let's connect! You may either reach out to me at harrychang.work@gmail.com or use the form below!")
-            #with st.form(key='columns_in_form2',clear_on_submit=True): #set clear_on_submit=True so that the form will be reset/cleared once it's submitted
-                #st.write('Please help us improve!')
-                #Name=st.text_input(label='Your Name',
-                                    #max_chars=100, type="default") #Collect user feedback
-                #Email=st.text_input(label='Your Email', 
-                                    #max_chars=100,type="default") #Collect user feedback
-                #Message=st.text_input(label='Your Message',
-                                        #max_chars=500, type="default") #Collect user feedback
-                #submitted = st.form_submit_button('Submit')
-                #if submitted:
-                    #st.write('Thanks for your contacting us. We will respond to your questions or inquiries as soon as possible!')
-            def create_database_and_table():
-                conn = sqlite3.connect('contact_form.db')
-                c = conn.cursor()
-                c.execute('''CREATE TABLE IF NOT EXISTS contacts
-                            (name TEXT, email TEXT, message TEXT)''')
-                conn.commit()
-                conn.close()
-            create_database_and_table()
+#         return icons_html
+#     with st.container():
+#         text_column, mid, image_column = st.columns((1,0.2,0.5))
+#         with text_column:
+#             st.write("Let's connect! You may either reach out to me at prvyas@seas.upenn.edu or use the form below!")
+#             #with st.form(key='columns_in_form2',clear_on_submit=True): #set clear_on_submit=True so that the form will be reset/cleared once it's submitted
+#                 #st.write('Please help us improve!')
+#                 #Name=st.text_input(label='Your Name',
+#                                     #max_chars=100, type="default") #Collect user feedback
+#                 #Email=st.text_input(label='Your Email', 
+#                                     #max_chars=100,type="default") #Collect user feedback
+#                 #Message=st.text_input(label='Your Message',
+#                                         #max_chars=500, type="default") #Collect user feedback
+#                 #submitted = st.form_submit_button('Submit')
+#                 #if submitted:
+#                     #st.write('Thanks for your contacting us. We will respond to your questions or inquiries as soon as possible!')
+#             def create_database_and_table():
+#                 conn = sqlite3.connect('contact_form.db')
+#                 c = conn.cursor()
+#                 c.execute('''CREATE TABLE IF NOT EXISTS contacts
+#                             (name TEXT, email TEXT, message TEXT)''')
+#                 conn.commit()
+#                 conn.close()
+#             create_database_and_table()
 
-            st.subheader("Contact Form")
-            if "name" not in st.session_state:
-                st.session_state["name"] = ""
-            if "email" not in st.session_state:
-                st.session_state["email"] = ""
-            if "message" not in st.session_state:
-                st.session_state["message"] = ""
-            st.session_state["name"] = st.text_input("Name", st.session_state["name"])
-            st.session_state["email"] = st.text_input("Email", st.session_state["email"])
-            st.session_state["message"] = st.text_area("Message", st.session_state["message"])
+#             st.subheader("Contact Form")
+#             if "name" not in st.session_state:
+#                 st.session_state["name"] = ""
+#             if "email" not in st.session_state:
+#                 st.session_state["email"] = ""
+#             if "message" not in st.session_state:
+#                 st.session_state["message"] = ""
+#             st.session_state["name"] = st.text_input("Name", st.session_state["name"])
+#             st.session_state["email"] = st.text_input("Email", st.session_state["email"])
+#             st.session_state["message"] = st.text_area("Message", st.session_state["message"])
 
 
-            column1, column2= st.columns([1,5])
-            if column1.button("Submit"):
-                conn = sqlite3.connect('contact_form.db')
-                c = conn.cursor()
-                c.execute("INSERT INTO contacts (name, email, message) VALUES (?, ?, ?)",
-                        (st.session_state["name"], st.session_state["email"], st.session_state["message"]))
-                conn.commit()
-                conn.close()
-                st.success("Your message has been sent!")
-                # Clear the input fields
-                st.session_state["name"] = ""
-                st.session_state["email"] = ""
-                st.session_state["message"] = ""
-            def fetch_all_contacts():
-                conn = sqlite3.connect('contact_form.db')
-                c = conn.cursor()
-                c.execute("SELECT * FROM contacts")
-                rows = c.fetchall()
-                conn.close()
-                return rows
+#             column1, column2= st.columns([1,5])
+#             if column1.button("Submit"):
+#                 conn = sqlite3.connect('contact_form.db')
+#                 c = conn.cursor()
+#                 c.execute("INSERT INTO contacts (name, email, message) VALUES (?, ?, ?)",
+#                         (st.session_state["name"], st.session_state["email"], st.session_state["message"]))
+#                 conn.commit()
+#                 conn.close()
+#                 st.success("Your message has been sent!")
+#                 # Clear the input fields
+#                 st.session_state["name"] = ""
+#                 st.session_state["email"] = ""
+#                 st.session_state["message"] = ""
+#             def fetch_all_contacts():
+#                 conn = sqlite3.connect('contact_form.db')
+#                 c = conn.cursor()
+#                 c.execute("SELECT * FROM contacts")
+#                 rows = c.fetchall()
+#                 conn.close()
+#                 return rows
             
-            if "show_contacts" not in st.session_state:
-                st.session_state["show_contacts"] = False
-            if column2.button("View Submitted Forms"):
-                st.session_state["show_contacts"] = not st.session_state["show_contacts"]
+#             if "show_contacts" not in st.session_state:
+#                 st.session_state["show_contacts"] = False
+#             if column2.button("View Submitted Forms"):
+#                 st.session_state["show_contacts"] = not st.session_state["show_contacts"]
             
-            if st.session_state["show_contacts"]:
-                all_contacts = fetch_all_contacts()
-                if len(all_contacts) > 0:
-                    table_header = "| Name | Email | Message |\n| --- | --- | --- |\n"
-                    table_rows = "".join([f"| {contact[0]} | {contact[1]} | {contact[2]} |\n" for contact in all_contacts])
-                    markdown_table = f"**All Contact Form Details:**\n\n{table_header}{table_rows}"
-                    st.markdown(markdown_table)
-                else:
-                    st.write("No contacts found.")
+#             if st.session_state["show_contacts"]:
+#                 all_contacts = fetch_all_contacts()
+#                 if len(all_contacts) > 0:
+#                     table_header = "| Name | Email | Message |\n| --- | --- | --- |\n"
+#                     table_rows = "".join([f"| {contact[0]} | {contact[1]} | {contact[2]} |\n" for contact in all_contacts])
+#                     markdown_table = f"**All Contact Form Details:**\n\n{table_header}{table_rows}"
+#                     st.markdown(markdown_table)
+#                 else:
+#                     st.write("No contacts found.")
 
 
-            st.write("Alternatively, feel free to check out my social accounts below!")
-            linkedin_url = "https://www.linkedin.com/in/harrychangjr/"
-            github_url = "https://github.com/harrychangjr"
-            email_url = "mailto:harrychang.work@gmail.com"
-            st.markdown(
-                social_icons(32, 32, LinkedIn=linkedin_url, GitHub=github_url, Email=email_url),
-                unsafe_allow_html=True)
-            st.markdown("")
-            #st.write("© 2023 Harry Chang")
-            #st.write("[LinkedIn](https://linkedin.com/in/harrychangjr) | [Github](https://github.com/harrychangjr) | [Linktree](https://linktr.ee/harrychangjr)")
-        with mid:
-            st.empty()
-        with image_column:
-            st.image(img_ifg)
-st.markdown("*Copyright © 2023 Harry Chang*")
+#             st.write("Alternatively, feel free to check out my social accounts below!")
+
+#             linkedin_url = "https://www.linkedin.com/in/prekshi-vyas/"
+#             github_url = "https://github.com/prekshivyas"
+#             email_url = "mailto:prvyas@seas.upenn.edu"
+#             st.markdown(
+#                 social_icons(32, 32, LinkedIn=linkedin_url, GitHub=github_url, Email=email_url),
+#                 unsafe_allow_html=True)
+#             st.markdown("")
+#             st.empty()
+        # with image_column:
+        #     st.image(img_ifg)
+# st.markdown("*Copyright © 2023 Harry Chang*")
 
