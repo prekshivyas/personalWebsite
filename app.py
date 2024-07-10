@@ -310,13 +310,11 @@ if choose == "About Me":
             with col1:
                 if st.button(".<<.", key=f"{key}_prev"):
                     st.session_state[key] = (index - 1) % len(images)
-                    st.experimental_rerun()
 
             # Next button
             with col4:
                 if st.button(".>>.", key=f"{key}_next"):
                     st.session_state[key] = (index + 1) % len(images)
-                    st.experimental_rerun()
             
         images = ["images/frenz3.jpeg", "images/intro.jpeg", "images/piano.jpeg"]
         with right_column:
