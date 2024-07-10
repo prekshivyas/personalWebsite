@@ -287,22 +287,8 @@ if choose == "About Me":
             # st.write("📄 [Resume (1 page)](https://drive.google.com/file/d/164EEVH6BmvC89q2M4WsBNF1JyddDAbNY/view?usp=sharing)")
         with middle_column:
             st.empty()
-        
-        def slideshow_swipeable(images):
-            # Create a unique key for this instance of the slideshow
-            key = f"slideshow_{str(images).encode().hex()}"
-
-            # Initialize the index in session state if it doesn't exist
-            if key not in st.session_state:
-                st.session_state[key] = 0
-
-            # Get the current index from session state
-            index = st.session_state[key]
-
-            # Display the current image
-            st.image(images[index], use_column_width=True)
-
-            st.markdown(
+            
+        st.markdown(
             """
             <style>
             .stButton > button {
@@ -321,6 +307,20 @@ if choose == "About Me":
             """,
             unsafe_allow_html=True
         )
+
+        def slideshow_swipeable(images):
+            # Create a unique key for this instance of the slideshow
+            key = f"slideshow_{str(images).encode().hex()}"
+
+            # Initialize the index in session state if it doesn't exist
+            if key not in st.session_state:
+                st.session_state[key] = 0
+
+            # Get the current index from session state
+            index = st.session_state[key]
+
+            # Display the current image
+            st.image(images[index], use_column_width=True)
 
 
             # Create two columns for previous and next buttons
