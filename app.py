@@ -246,8 +246,8 @@ with st.sidebar:
     
     choose = option_menu(
                         "Prekshi Vyas", 
-                        ["About Me", "Experience & Research", "Technical Skills", "Education", "Talks", "Projects", "Certifications"],
-                         icons=['person-fill', 'clock-fill', 'tools', 'book-half', 'star-half', 'pencil-fill', 'award-fill', 'clipboard-fill', 'envelope-fill'],
+                        ["About Me", "Experience & Research", "Technical Skills", "Education", "Talks", "Projects", "Certifications", "Leadership and Volunteering"],
+                         icons=['person-fill', 'clock-fill', 'tools', 'book-half', 'star-half', 'pencil-fill', 'award-fill', 'heart-half'],
                          menu_icon="mortarboard", 
                          default_index=0,
                          styles={
@@ -292,9 +292,13 @@ if choose == "About Me":
             # st.subheader("All things Cloud and ML!")
             # st.markdown("<h4 style='font-size: 20px;'>Currently looking for Summer 2025 Internships</h4>", unsafe_allow_html=True)
 
-            st.write("👋🏻 Hello, I'm Prekshi, currently pursuing a Master's in Computer Science at the University of Pennsylvania. With 3 years of professional experience as a Software Engineer specializing in Cloud and DevOps, I have also made significant contributions to Open Source projects. My journey includes speaking at global summits, leading academic projects, and conducting research in Natural Language Processing. I excel in automating and optimizing processes to ensure reliability and scalability. I am actively pursuing opportunities for Summer 2025 Internships.")
-            st.write("💃 In addition, I am a street style dancer and love reading non-fiction!")
-            st.write("👨🏼‍💻 Interests: Microservices, Distributed Systems, DevOps, MultiModal Large Models, Machine Learning, Natural Language Processing, Computer Vision, Data Orchestration")
+            st.write("👋🏻 Hello, I'm Prekshi, currently pursuing a Master's in Computer Science at the University of Pennsylvania. I have 3 years of professional experience as a Software Engineer specializing in Cloud and DevOps, and have made significant contributions to Open Source projects and Machine Learning benchmarks. ")
+                     
+            st.write("My journey so far also includes speaking at global summits, leading academic projects, and conducting research in Natural Language Processing. I excel in automating and optimizing processes to ensure reliability and scalability. I am actively seeking opportunities for Summer 2025 internships.")
+
+            st.write("💃 Beyond coding, I am a professional street style dancer, pianist and love reading non-fiction!")
+
+            st.write("👨🏼‍💻 Interests: Microservices, Distributed Systems, Cloud, DevOps, MultiModal Large Models, Machine Learning, Natural Language Processing, Computer Vision, Data Orchestration")
             # st.write("📄 [Resume (1 page)](https://drive.google.com/file/d/164EEVH6BmvC89q2M4WsBNF1JyddDAbNY/view?usp=sharing)")
         with middle_column:
             st.empty()
@@ -421,7 +425,7 @@ elif choose == "Experience & Research":
                 if i + idx < len(experiences):
                     exp = experiences[i + idx]
                     with col:
-                        st.image(exp['image_url'], width=300)
+                        st.image(exp['image_url'], width=200)
                         st.subheader(exp['position'])
                         st.write(exp['duration'])
                         st.markdown(f"**[{exp['company_name']}]({exp['company_url']})**")
@@ -714,51 +718,49 @@ elif choose == "Competitions":
             st.write("2D pixel art created using Pillow (PIL) Library in Python")
             #st.write("[Github Repo](https://github.com/harrychangjr/runes)")
             mention(label="Github Repo", icon="github", url="https://github.com/harrychangjr/runes",)
-elif choose == "Volunteering":
-    st.header("Volunteering")
-    with st.container():
-        text_column, mid, image_column = st.columns((3,0.4,1))
-        with text_column:
-            st.subheader("NUS Fintech Society")
-            st.write("*August 2023 to April 2024*")
-            st.markdown("""
-            Design Manager (UI/UX Design Lead)
-
-
-            """)
-        with mid:
-            st.empty()
-        with image_column:
-            st.image(images_vol[11])
-    with st.container():
-        text_column, mid, image_column = st.columns((3,0.4,1))
-        with text_column:
-            st.subheader("NUS Human Capital Society")
-            st.write("*July 2023 to April 2024*")
-            st.markdown("""
-            Research & Strategy Executive
-
-            """)
-        with mid:
-            st.empty()
-        with image_column:
-            st.image(images_vol[10])
-    with st.container():
-        text_column, mid, image_column = st.columns((3,0.4,1))
-        with text_column:
-            st.subheader("NUS Product Club")
-            st.write("*April 2023 to April 2024*")
-            st.markdown("""
-            Co-founder & President
-
-            - Designed recruitment posters, club logo and [information deck](https://bit.ly/nuspc-infodeck) using Canva and Figma to increase brand awareness of new club, increasing social media outreach to over 1,000 followers across LinkedIn, Telegram and Instagram within 2 months since club formation
-            - Onboarded Staff Advisor and Product Managers from various industries to organise club events, including fireside chats and curriculum workshops that would better educate students on product management
-            - Currently designing curriculum for future Product Analytics Workshop, covering essential topics including product metrics, A/B testing, predictive analytics and cohort analysis
-            """)
-        with mid:
-            st.empty()
-        with image_column:
-            st.image(images_vol[9])
+elif choose == "Leadership and Volunteering":
+    lv = [
+        {
+            'Position': 'Technical Writer',
+            'Organization': "VIT Google Developer's Club",
+            'Description': "Created comprehensive guides and tutorials on software development and coding best practices. Collaborated with student developers to ensure accuracy and clarity in documentation.",
+            'image_url': 'images/gdg.png',
+            'org_url': ''
+        },
+        {
+            'Position': 'Team Lead and PR Head',
+            'Organization': 'VIT Dance Club',
+            'Description': "Led a contingent of 150 members across 14 teams in the club inlcluding a street dancing team of 17 members to compete and win several cultural fests including Asia's biggest college festival - Mood Indigo",
+            'image_url': 'images/dc.jpg',
+            'org_url': ''
+        },
+        {
+            'Position': 'Contributor',
+            'Organization': 'Aket Foundation',
+            'Description': "Supported the cause Village Development Program (Virtual Adoption of a child). Through the concept of virtual adoption, I was able to contribute financial resources to ensure the well-being, education, and overall development of a specific child within a village.",
+            'image_url': 'images/aket.jpg',
+            'org_url': 'org_url'
+            
+        },
+        {
+            'Position': 'Volunteer for the K-12 Program',
+            'Organization': 'Smile Foundation',
+            'Description': 'Organized campaigns to raise funds and awareness for the education of underprivileged children. Alongside this, I also volunteered as a meal server on the weekends.',
+            'image_url': 'images/smilef.jpg',
+            'org_url': ''
+        }
+    ]
+    for i in range(0, len(lv), 2):
+        with st.container():
+            cols = st.columns(2)
+            for idx, col in enumerate(cols):
+                if i + idx < len(lv):
+                    exp = lv[i + idx]
+                    with col:
+                        st.image(exp['image_url'], width=500)
+                        st.subheader(exp['Position'])
+                        st.markdown(f"**{exp['Organization']}**")
+                        st.markdown(f"- {exp['Description']}")
     
 elif choose == "Blog":
     st.header("Blog")
