@@ -287,7 +287,7 @@ if choose == "About Me":
             # st.write("📄 [Resume (1 page)](https://drive.google.com/file/d/164EEVH6BmvC89q2M4WsBNF1JyddDAbNY/view?usp=sharing)")
         with middle_column:
             st.empty()
-            
+
         st.markdown(
             """
             <style>
@@ -320,7 +320,8 @@ if choose == "About Me":
             index = st.session_state[key]
 
             # Display the current image
-            st.image(images[index], use_column_width=True)
+            with st.container(height=400):
+                st.image(images[index], use_column_width=True)
 
 
             # Create two columns for previous and next buttons
