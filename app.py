@@ -320,7 +320,7 @@ if choose == "About Me":
             index = st.session_state[key]
 
             # Display the current image
-            with st.container(height=380):
+            with st.container(height=370):
                 st.image(images[index], use_column_width=True)
 
 
