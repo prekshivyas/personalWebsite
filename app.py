@@ -288,27 +288,20 @@ if choose == "About Me":
         with middle_column:
             st.empty()
 
-        st.markdown(
-            """
-            <style>
-            .stButton > button {
-                background-color: white;
-                color: black;
+        custom_css = """
+        <style>
+            .fixed-size-button {
+                width: 50px !important;
+                height: 30px !important;
+                padding: 0px !important;
+                line-height: 30px !important;
+                text-align: center !important;
             }
-            .stButton > button:hover {
-                background-color: white;
-                color: black;
-            }
-            .stButton > button:active {
-                background-color: white;
-                color: black;
-            }
-            </style>
-            """,
-            unsafe_allow_html=True
-        )
+        </style>
+        """
 
         def slideshow_swipeable(images):
+            st.markdown(custom_css, unsafe_allow_html=True)
             # Create a unique key for this instance of the slideshow
             key = f"slideshow_{str(images).encode().hex()}"
 
@@ -320,7 +313,7 @@ if choose == "About Me":
             index = st.session_state[key]
 
             # Display the current image
-            with st.container(height=360):
+            with st.container(height=390):
                 st.image(images[index], use_column_width=True)
 
 
@@ -329,28 +322,30 @@ if choose == "About Me":
 
             # Previous button
             with col1:
-                if st.button(".<<.", key=f"{key}_prev"):
-                    st.session_state[key] = (index - 1) % len(images)
+                if st.button(".<.", key=f"{key}_prev", help="Previous image", 
+                            on_click=lambda: setattr(st.session_state, key, (index - 1) % len(images)),
+                            use_container_width=False):
                     st.experimental_rerun()
 
             # Next button
             with col4:
-                if st.button(".>>.", key=f"{key}_next"):
-                    st.session_state[key] = (index + 1) % len(images)
+                if st.button(".>.", key=f"{key}_next", help="Next image", 
+                            on_click=lambda: setattr(st.session_state, key, (index + 1) % len(images)),
+                            use_container_width=False):
                     st.experimental_rerun()
             
         images = ["images/frenz3.jpeg", "images/intro.jpeg", "images/piano.jpeg"]
         with right_column:
             slideshow_swipeable(images)
         
-        st.markdown(
-        """
-    <div style="position: fixed; bottom: 10px; right: 10px; text-align: right;">
-        <p style="font-size: 12px; color: grey;">Portfolio design inspired by <a href="https://github.com/harrychangjr/portfolio" target="_blank">Harry Chang</a></p>
-    </div>
-    """,
-        unsafe_allow_html=True
-    )
+    #     st.markdown(
+    #     """
+    # <div style="position: fixed; bottom: 10px; right: 10px; text-align: right;">
+    #     <p style="font-size: 12px; color: grey;">Portfolio design inspired by <a href="https://github.com/harrychangjr/portfolio" target="_blank">Harry Chang</a></p>
+    # </div>
+    # """,
+    #     unsafe_allow_html=True
+    # )
                 
 
 elif choose == "Experience & Research":
@@ -379,7 +374,7 @@ elif choose == "Experience & Research":
             "- Created 12 visually intuitive dashboards for real-time insights into critical metrics, enhancing service health monitoring.\n"
             "- Automated the EKS upgrade process, streamlining the configuration of add-ons and in-cluster EC2 node upgrades, reducing time and labor costs by 75%.\n"
             "- Fixed 74 security vulnerabilities across 12 different docker images in ECR production.\n",
-            'skills': "`Python` `AWS` `Prometheus` `Grafana` `Terraform` `Docker` `Git` `Jira` `Confluence`"
+            'skills': "`Python` `AWS` `Prometheus` `Grafana` `Kubernetes` `Helm` `Terraform` `Docker` `Git` `Jira` `Confluence`"
         },
         {
             'image_url': img_sg,
@@ -394,7 +389,7 @@ elif choose == "Experience & Research":
             "- Designed and developed a micro-service based, workflow logging, and monitoring system which catalyzed 20% surge in service adoption.\n"
             "- Promoted to QA Representative for leading successful cloud service migration, achieving 99% KPI, and mentoring interns to automate Disaster Recovery in 3 months.\n"
             "- Presented at the Airflow 2022 Global Summit, engaging 500+ professionals with a tech talk on efficient workflow orchestration\n",
-            'skills': "`Airflow` `API Development` `Kubernetes` `Jenkins` `Terraform` `Docker`"
+            'skills': "`Airflow` `API Development` `Docker` `Kubernetes` `Helm` `Jenkins` `Terraform` `FluentBit` `Telegraf` `StatsD`"
         },
         {
             'image_url': img_sg,
@@ -461,6 +456,15 @@ elif choose == "Technical Skills":
         {"name": "Flask-Restful APIs", "image_url": "images/skills/Flask.svg"},
         {"name": "Firebase", "image_url": "images/skills/firebase.svg"},
         {"name": "Jenkins CI/CD", "image_url": "images/skills/Jenkins.svg"},
+        {"name": "Apache Airflow", "image_url": "images/skills/airflow.svg"},
+        {"name": "AWS", "image_url": "images/skills/icons8-amazon-web-services.svg"},
+        {"name": "Linux", "image_url": "images/skills/linux.svg"},
+        {"name": "Docker", "image_url": "images/skills/icons8-docker.svg"},
+        {"name": "Kubernetes", "image_url": "images/skills/kubernetes.svg"},
+        {"name": "Helm", "image_url": "images/skills/helm.svg"},
+        {"name": "Terraform", "image_url": "images/skills/terraform.svg"},
+        {"name": "Grafana", "image_url": "images/skills/grafana.svg"},
+        {"name": "Prometheus", "image_url": "images/skills/prometheus.svg"},
         {"name": "SQL", "image_url": "images/skills/sql.svg"},
         {"name": "Hugging Face", "image_url": "images/skills/huggface.png"},
         {"name": "RoboFlow", "image_url": "images/skills/roboflow.jpg"},
@@ -471,15 +475,6 @@ elif choose == "Technical Skills":
         {"name": "PostgresDB", "image_url": "images/skills/PostgresSQL.svg"},
         {"name": "Apache Spark", "image_url": "images/skills/spark.svg"},
         {"name": "Apache Kafka", "image_url": "images/skills/kafka.svg"},
-        {"name": "Apache Airflow", "image_url": "images/skills/airflow.svg"},
-        {"name": "AWS", "image_url": "images/skills/icons8-amazon-web-services.svg"},
-        {"name": "Linux", "image_url": "images/skills/linux.svg"},
-        {"name": "Docker", "image_url": "images/skills/icons8-docker.svg"},
-        {"name": "Kubernetes", "image_url": "images/skills/kubernetes.svg"},
-        {"name": "Helm", "image_url": "images/skills/helm.svg"},
-        {"name": "Terraform", "image_url": "images/skills/terraform.svg"},
-        {"name": "Grafana", "image_url": "images/skills/grafana.svg"},
-        {"name": "Prometheus", "image_url": "images/skills/prometheus.svg"},
         {"name": "Bash/Shell Scripting", "image_url": "images/skills/bash.svg"},
         {"name": "Microservices", "image_url": "images/skills/microservices.svg"},
          {"name": "JIRA", "image_url": "images/skills/Jira.svg"},
@@ -644,10 +639,17 @@ elif choose == "Projects":
             - Improved Image Classification using a custom CNN architecture with advanced pre-processing techniques, including normalization, Gaussian blur, and augmentation via data-set shifts.
             - Conducted a comprehensive grid search, resulting in 288 different model configurations achieving best accuracy of 86%.
             """)
-            #st.write("[Github Repo](https://github.com/harrychangjr/dsa4212) | [Report](https://github.com/harrychangjr/dsa4212/blob/main/DSA4212%20Assignment%202%20Group%2039%20Report.pdf)")
             mention(label="Github Repo", icon="github", url="https://github.com/prekshivyas/CIS-5190-Applied-ML",)
-        # with image_column:
-        #     st.image(images_projects[2])
+
+    st.markdown("---")
+    with st.container():
+        text_column, image_column = st.columns((3,1))
+        with text_column:
+            st.subheader("Open Source - Kafkaer")
+            st.markdown("""
+            - Fixed 4 critical vulnerabilities identified through Anchore scan in latest version of the deployment-configuration tool for Apache Kafka.
+            """)
+            mention(label="Github Repo", icon="github", url="https://github.com/navdeepsekhon/kafkaer/pull/24",)
     
 
 elif choose == "Leadership and Volunteering":
