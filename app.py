@@ -277,11 +277,11 @@ if choose == "About Me":
             # st.subheader("All things Cloud and ML!")
             # st.markdown("<h4 style='font-size: 20px;'>Currently looking for Summer 2025 Internships</h4>", unsafe_allow_html=True)
 
-            st.write("👋🏻 Hello, I'm Prekshi, currently pursuing a Master's in Computer Science at the University of Pennsylvania. I have 3 years of professional experience as a Software Engineer specializing in Cloud and DevOps, and have made significant contributions to Open Source projects and Machine Learning benchmarks. ")
+            st.write("👋🏻 Hello, I'm Prekshi, currently pursuing a Master's in Computer Science at the University of Pennsylvania. I have 3 years of professional experience as a Software Engineer specializing in Cloud and DevOps, and have made contributions to Open Source projects and Machine Learning benchmarks. ")
                      
-            st.write("My journey so far also includes delivering talks at global summits and conducting research in Natural Language Processing. I specialize in automating and optimizing processes for enhanced reliability and scalability. I am actively seeking opportunities for Summer 2025 internships.")
+            st.write("My journey so far also includes delivering talks at global summits and conducting research in MultiModal Reasoing with VLMs. I specialize in automating, optimizing and deploying processes for enhanced reliability and scalability. I am actively seeking opportunities for Summer 2025 internships!")
 
-            st.write("💃 Beyond tech, I am a competitive street style dancer, pianist and love reading non-fiction!")
+            st.write("💃 Beyond tech, I am a competitive street style dancer, pianist and love reading non-fiction")
 
             st.write("👨🏼‍💻 Interests: Microservices, Distributed Systems, Cloud, DevOps, MultiModal Large Models, Machine Learning, Natural Language Processing, Computer Vision, Data Orchestration")
             # st.write("📄 [Resume (1 page)](https://drive.google.com/file/d/164EEVH6BmvC89q2M4WsBNF1JyddDAbNY/view?usp=sharing)")
