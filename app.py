@@ -279,7 +279,7 @@ if choose == "About Me":
 
             st.write("👋🏻 Hello, I'm Prekshi, currently pursuing a Master's in Computer Science at the University of Pennsylvania. I have 3 years of professional experience as a Software Engineer specializing in Cloud and DevOps, and have made contributions to Open Source projects and Machine Learning benchmarks. ")
                      
-            st.write("My journey so far also includes delivering talks at global summits and conducting research in MultiModal Reasoing with VLMs. I specialize in automating, optimizing and deploying processes for enhanced reliability and scalability. I am actively seeking opportunities for Summer 2025 internships!")
+            st.write("My journey so far also includes delivering talks at global summits and conducting research in MultiModal Reasoning with VLMs. I specialize in automating, optimizing and deploying processes for enhanced reliability and scalability. I am actively seeking opportunities for Summer 2025 internships!")
 
             st.write("💃 Beyond tech, I am a competitive street style dancer, pianist and love reading non-fiction.")
 
