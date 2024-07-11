@@ -281,7 +281,7 @@ if choose == "About Me":
                      
             st.write("My journey so far also includes delivering talks at global summits and conducting research in MultiModal Reasoing with VLMs. I specialize in automating, optimizing and deploying processes for enhanced reliability and scalability. I am actively seeking opportunities for Summer 2025 internships!")
 
-            st.write("💃 Beyond tech, I am a competitive street style dancer, pianist and love reading non-fiction")
+            st.write("💃 Beyond tech, I am a competitive street style dancer, pianist and love reading non-fiction.")
 
             st.write("👨🏼‍💻 Interests: Microservices, Distributed Systems, Cloud, DevOps, MultiModal Large Models, Machine Learning, Natural Language Processing, Computer Vision, Data Orchestration")
             # st.write("📄 [Resume (1 page)](https://drive.google.com/file/d/164EEVH6BmvC89q2M4WsBNF1JyddDAbNY/view?usp=sharing)")
@@ -432,7 +432,7 @@ elif choose == "Experience & Research":
                 if i + idx < len(experiences):
                     exp = experiences[i + idx]
                     with col:
-                        st.image(exp['image_url'], width=400)
+                        st.image(exp['image_url'], width=360)
                         st.subheader(exp['position'])
                         st.write(exp['duration'])
                         st.markdown(f"**[{exp['company_name']}]({exp['company_url']})**")
