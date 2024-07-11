@@ -313,7 +313,7 @@ if choose == "About Me":
             index = st.session_state[key]
 
             # Display the current image
-            with st.container(height=390):
+            with st.container(height=400):
                 st.image(images[index], use_column_width=True)
 
 
@@ -334,9 +334,9 @@ if choose == "About Me":
                             use_container_width=False):
                     st.experimental_rerun()
             
-        images = ["images/frenz3.jpeg", "images/intro.jpeg", "images/piano.jpeg"]
+        imagess = ["images/frenz3.jpeg", "images/intro.jpeg", "images/piano.jpeg"]
         with right_column:
-            slideshow_swipeable(images)
+            slideshow_swipeable(imagess)
         
     #     st.markdown(
     #     """
