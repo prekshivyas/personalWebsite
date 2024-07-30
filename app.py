@@ -283,7 +283,7 @@ if choose == "About Me":
 
             st.write("💃 Beyond tech, I am a competitive street style dancer, pianist and love reading non-fiction.")
 
-            st.write("👨🏼‍💻 Interests: Microservices, Distributed Systems, Cloud, DevOps, MultiModal Large Models, Machine Learning, Natural Language Processing, Computer Vision, Data Orchestration")
+            st.write("👨🏼‍💻 Interests: Microservices, Distributed Systems, Cloud, DevOps, MultiModal Large Models, Machine Learning, Data Orchestration")
             # st.write("📄 [Resume (1 page)](https://drive.google.com/file/d/164EEVH6BmvC89q2M4WsBNF1JyddDAbNY/view?usp=sharing)")
         with middle_column:
             st.empty()
